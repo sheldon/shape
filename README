@@ -1,0 +1,4 @@
+Shape is a Web Based Content Management System.
+It is built as a plugin for the php wax (http://php-wax.com) framework.
+It is heavily based on Wildfire (http://github.com/phpwax/wildfire)
+and Wordpress (http://wordpress.org).
