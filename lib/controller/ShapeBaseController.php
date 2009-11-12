@@ -27,6 +27,7 @@ class ShapeBaseController extends WaxController {
 	  //merge base permissions into extended ones
 	  $this->permissions = array_unique(array_merge($this->base_permissions,$this->permissions));
 	  if(!$this->auth() && $route != $this->login_path) $this->redirect_to($this->login_path);
+	  $this->add_plugin("shape");
 	}
   /**
    * auth process. first check if a user exists. then check if they are allowed to do what they're trying to.
