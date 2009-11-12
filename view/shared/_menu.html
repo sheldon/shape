@@ -1,5 +1,8 @@
-<ul class="shape_listing">
+<ul class="shape_listing <?=str_replace("/", "-", $controller)?>-list">
   <?foreach($shape_content as $i=>$content):?>
-  <li class='list_item item<?=$i?> type<?=fmod($i,2)?>'><a href="/shape/page/edit/<?=$content->primval?>" title="Edit <?=$content->title?>" class='shape-page-list-item load_trigger'><?=$content->title?></a></li>
+  <li class='list_item item<?=$i?> type<?=fmod($i,2)?>'>
+    <span class="ui-icon ui-icon-triangle-1-e"></span>
+    <a href="/<?=$controller?>/edit/<?=$content->primval?>" title="Edit <?=$content->title?>" class='<?=str_replace("/", "-", $controller)?>-list-item load_trigger'><?=$content->title?></a>
+  </li>
   <?endforeach?>
 </ul>
