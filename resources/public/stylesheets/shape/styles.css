@@ -479,8 +479,7 @@ form.waxform fieldset input.submit_field{
   float:left;
   width:23%;
 }
-  #menu_container .icons{display:none;float:right;}
-  
+  #menu_container .icons{display:none;float:right;}  
   #menu_container .ui-accordion-content{padding:0}
     #menu_container li{padding:3px 4px;}
     #menu_container li a{padding:2px 15px 2px 20px;text-decoration:none;}
@@ -499,12 +498,28 @@ form.waxform fieldset input.submit_field{
     .ui-state-hover .icons a.active{
       background-image:url('/images/shape/ui/ui-icons_ff0084_256x240.png');
     }   
-    
+    #menu-shape-dashboard{margin-bottom:15px;}
+    #menu-shape-dashboard h3{font-weight:bold;}
 /*content div*/ 
 #page{
  margin-left:25%; 
  width:74%;
 }
+/**widgets**/
+.widget{
+  float:left;
+  padding:0;
+  margin:0 1% 1% 0;
+  -moz-border-radius:2px;
+  -webkit-border-radius:2px;
+  border:1px solid #CCCCCC;
+}
+  .widget-title{
+    padding:5px 4px 3px 4px;
+    font-weight:normal;
+    border-width:0;
+    margin:0;
+  }
 /*login page*/
 body.shape-login #content{width:50%;margin:30px auto;}
 body.shape-login #menu_container{display:none;width:0;}
