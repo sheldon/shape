@@ -1,8 +1,8 @@
 /*
-Copyright (c) 2009,Yahoo! Inc. All rights reserved.
-Code licensed under the BSD License:http://developer.yahoo.net/yui/license.txt
-version:3.0.0
-build:1549
+Copyright (c) 2008, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 2.6.0
 */
 html{color:#000;background:#FFF;}
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}
@@ -19,6 +19,12 @@ sub{vertical-align:text-bottom;}
 input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}
 input,textarea,select{*font-size:100%;}
 legend{color:#000;}
+del,ins{text-decoration:none;}
+body{font:13px/1.231 arial,helvetica,clean,sans-serif;*font-size:small;*font:x-small;}
+select,input,button,textarea{font:99% arial,helvetica,clean,sans-serif;}
+table{font-size:inherit;font:100%;}
+pre,code,kbd,samp,tt{font-family:monospace;*font-size:108%;line-height:100%;}
+body{text-align:left;}
 /* Nasty clearfix hacks */
 .clearfix{display:inline-block;}
 /* Hide from IE Mac \*/ 
@@ -69,11 +75,11 @@ legend{color:#000;}
 .ui-widget-header a{color:#444444;}
 /* Interaction states
 ----------------------------------*/
-.ui-state-default,.ui-widget-content .ui-state-default{border:1px solid #dddddd;background:#f6f6f6 url(/images/shape/ui/ui-bg_highlight-soft_100_f6f6f6_1x100.png) 50% 50% repeat-x;font-weight:bold;color:#66acf5;outline:none;}
+.ui-state-default,.ui-widget-content .ui-state-default{border:1px solid #dddddd;background:#f6f6f6 url(/images/shape/ui/ui-bg_highlight-soft_100_f6f6f6_1x100.png) 50% 50% repeat-x;color:#66acf5;outline:none;}
 .ui-state-default a,.ui-state-default a:link,.ui-state-default a:visited{color:#66acf5;text-decoration:none;outline:none;}
-.ui-state-hover,.ui-widget-content .ui-state-hover,.ui-state-focus,.ui-widget-content .ui-state-focus{border:1px solid #66acf5;background:#66acf5 url(/images/shape/ui/ui-bg_highlight-soft_25_66acf5_1x100.png) 50% 50% repeat-x;font-weight:bold;color:#ffffff;outline:none;}
+.ui-state-hover,.ui-widget-content .ui-state-hover,.ui-state-focus,.ui-widget-content .ui-state-focus{border:1px solid #66acf5;background:#66acf5 url(/images/shape/ui/ui-bg_highlight-soft_25_66acf5_1x100.png) 50% 50% repeat-x;color:#ffffff;outline:none;}
 .ui-state-hover a,.ui-state-hover a:hover{color:#ffffff;text-decoration:none;outline:none;}
-.ui-state-active,.ui-widget-content .ui-state-active{border:1px solid #dddddd;background:#ffffff url(/images/shape/ui/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x;font-weight:bold;color:#ff0084;outline:none;}
+.ui-state-active,.ui-widget-content .ui-state-active{border:1px solid #dddddd;background:#ffffff url(/images/shape/ui/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x;color:#ff0084;outline:none;}
 .ui-state-active a,.ui-state-active a:link,.ui-state-active a:visited{color:#ff0084;outline:none;text-decoration:none;}
 /* Interaction Cues
 ----------------------------------*/
@@ -412,4 +418,19 @@ height:200px;/*must have*/}
 
 /** LAYOUT**/
 #heading{border-width:0;}
-#heading li{font-family:georgia;}
+#heading li{font-size:123%;}
+#heading li.smaller{font-size:93%;position:relative;top:10px;}
+/*total container*/
+#content{
+  margin-top:30px;
+  padding:0 5px;
+}
+/*menu & layout divs*/
+#menu_container{
+  float:left;
+  width:23%;
+}
+#page{
+ margin-left:25%; 
+ width:74%;
+}
