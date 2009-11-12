@@ -2,4 +2,6 @@
 /**
 * Shape Controller - Extendable Plugin Stub
 */
-class ShapeController extends ShapeBaseController {}?>
+class ShapeController extends ShapeBaseController {}
+
+?>
