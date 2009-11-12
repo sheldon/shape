@@ -2,7 +2,7 @@
 class ShapeUser extends WaxModel {
   public function setup() {
     $this->define("username", "CharField", array("required"=>true, "unique"=>true));
-    $this->define("password", "CharField");
+    $this->define("password", "PasswordField");
     $this->define("email", "CharField");
     $this->define("firstname", "CharField");
     $this->define("surname", "CharField");
