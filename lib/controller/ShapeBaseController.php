@@ -105,15 +105,17 @@ class ShapeBaseController extends WaxController {
   
   /** GENERIC ACTIONS **/
   public function index(){}
-  public function listing(){}
   public function create(){}
   public function edit(){}
   public function delete(){}
   
   /** GENERIC PARTIALS **/
+  public function _listing(){
+    $model= new $this->model_class;
+    if(!$this->shape_content = $model->order($this->model_order)->page($this->this_page, $this->per_page)) $this->shape_content = array();
+  }
   /**
    * fetch everything for this model and spit it out
-   *
    */
   public function _menu(){
     $model= new $this->model_class;
