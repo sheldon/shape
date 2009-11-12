@@ -23,6 +23,7 @@ class ShapeBaseController extends WaxController {
   public $site_name;
   
   public $shape_content;
+  
   function __construct($run_init = true) {
     parent::__construct($run_init);
 	  if($run_init) $this->shape_init();
@@ -105,6 +106,13 @@ class ShapeBaseController extends WaxController {
   public function delete(){}
   
   /** GENERIC PARTIALS **/
-  public function _menu(){}
+  /**
+   * fetch everything for this model and spit it out
+   *
+   */
+  public function _menu(){
+    $model= new $this->model_class;
+    if(!$this->shape_content = $model->order($this->model_order)->all()) $this->shape_content = array();
+  }
   
 }?>
