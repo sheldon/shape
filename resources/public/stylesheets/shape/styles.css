@@ -495,8 +495,8 @@ form.widget-form label{
 }
   #menu_container .icons{display:none;float:right;}  
   #menu_container .ui-accordion-content{padding:0}
-    #menu_container li{padding:3px 4px;}
-    #menu_container li a{padding:2px 15px 2px 20px;text-decoration:none;}
+    #menu_container li{padding:3px 4px 3px 6px;}
+      #menu_container li a{padding:2px 15px 2px 20px;text-decoration:none;}
       #menu_container li span.ui-icon{position:absolute;}      
       
   #menu_container .ui-state-hover .icons{
@@ -529,7 +529,7 @@ form.widget-form label{
   border:1px solid #CCCCCC;
 }
   .widget-title{
-    padding:5px 4px 3px 8px;
+    padding:5px 8px 3px 8px;
     font-weight:normal;
     border-width:0;
     margin:0;
