@@ -85,4 +85,11 @@ class ShapeBaseController extends WaxController {
     }
   }
   
+  public function logout(){
+    Session::unset_var('shape_redirect_to');
+    Session::add_message('You have been logged out.');
+		$this->authenticate->logout();		
+		$this->redirect_to($this->login_path);  	
+	}
+  
 }?>
