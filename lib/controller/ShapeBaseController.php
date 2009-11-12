@@ -18,6 +18,7 @@ class ShapeBaseController extends WaxController {
   public $permissions = array(); //stub for extendable permissions, can be added to extended controllers easily
   
   public $model_class;
+  public $model_order;
   
   public $site_name;
   
