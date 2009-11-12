@@ -418,8 +418,8 @@ height:200px;/*must have*/}
 
 /** LAYOUT**/
 #heading{border-width:0;}
-#heading li{font-size:123%;}
-#heading li.smaller{font-size:93%;position:relative;top:10px;}
+  #heading li{font-size:123%;}
+  #heading li.smaller{font-size:93%;position:relative;top:10px;}
 /*total container*/
 #content{
   margin-top:30px;
@@ -430,6 +430,10 @@ height:200px;/*must have*/}
   float:left;
   width:23%;
 }
+  #menu_container .ui-accordion-content{padding:3px 6px;}
+    #menu_container .ui-accordion-content li a{padding:2px 2px 2px 20px;text-decoration:none;}
+      #menu_container .ui-accordion-content li span.ui-icon{position:absolute;}
+  
 #page{
  margin-left:25%; 
  width:74%;
