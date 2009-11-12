@@ -22,6 +22,7 @@ class ShapeBaseController extends WaxController {
   
   public $site_name;
   
+  public $shape_content;
   function __construct($run_init = true) {
     parent::__construct($run_init);
 	  if($run_init) $this->shape_init();
