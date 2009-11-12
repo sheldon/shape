@@ -93,4 +93,14 @@ class ShapeBaseController extends WaxController {
 		$this->redirect_to($this->login_path);  	
 	}
   
+  /** GENERIC ACTIONS **/
+  public function index(){}
+  public function listing(){}
+  public function create(){}
+  public function edit(){}
+  public function delete(){}
+  
+  /** GENERIC PARTIALS **/
+  public function _menu(){}
+  
 }?>
