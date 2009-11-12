@@ -39,10 +39,16 @@ function warnings(){
   });
 }
 
+function widgets(){
+  if(jQuery('.widget').length){
+    jQuery('.widget').draggable({ snap: true });
+  }
+}
 
 jQuery(document).ready(function(){
   
   main_menu();
   warnings();
+  widgets();
   
 });
