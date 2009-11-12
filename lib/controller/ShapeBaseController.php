@@ -45,8 +45,8 @@ class ShapeBaseController extends WaxController {
    */
   public function auth(){
     if(self::$current_user) return true;
-		$auth = new WaxAuthDb(array("encrypt"=>true, "db_table"=>$this->user_table, "session_key"=>"shape_user_cookie"));
-		if(self::$current_user = $auth->get_user()) return true;
+		$this->authenticate = new WaxAuthDb(array("encrypt"=>true, "db_table"=>$this->user_table, "session_key"=>"shape_user_cookie"));
+		if(self::$current_user = $this->authenticate->get_user()) return true;
 		return false;
   }
   
