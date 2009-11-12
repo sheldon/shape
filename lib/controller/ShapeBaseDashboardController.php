@@ -1,6 +1,8 @@
 <?php
 class ShapeBaseDashboardController extends ShapeController {
 
-  public function index(){}
+  public function _menu(){
+    
+  }
 
 }?>
