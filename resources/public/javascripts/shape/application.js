@@ -10,11 +10,16 @@ function accordion(container, opts){
 Everything for the main menu runs from this function
 */
 function main_menu(){    
+  //menu accordion
   var acc_id = 'menu-'+jQuery('body').attr('id');
-  if(jQuery(acc_id).length) accordion(menu_id, {active: '#'+acc_id});
-  else accordion(menu_id);
+  if(jQuery(acc_id).length) accordion(menu_id, {active: '#'+acc_id, collapsible:true});
+  else accordion(menu_id, {collapsible:true, active:false});
   
-  jQuery(menu_id+' ul.shape_listing li').hover(
+  //add active class for he dashboard
+  if(acc_id == 'menu-shape-dashboard') jQuery('#menu-shape-dashboard h3').addClass('ui-state-active');
+  
+  //hover effects on list items
+  jQuery(menu_id+' ul.shape_listing li, #menu-shape-dashboard h3').hover(
     function(){jQuery(this).addClass('ui-state-hover');},
     function(){jQuery(this).removeClass('ui-state-hover');}
   );
@@ -22,6 +27,7 @@ function main_menu(){
     function(){jQuery(this).addClass('active');},
     function(){jQuery(this).removeClass('active');}
   );
+  
   
 }
 /*
