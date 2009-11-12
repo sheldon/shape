@@ -1,0 +1,5 @@
+<?if(count($widgets)):?>
+  <?foreach($widgets as $widget):?><?=partial("$widget");?><?endforeach?>
+<?else:?>
+<?=partial("/$controller/_listing");?>
+<?endif?>
