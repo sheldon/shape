@@ -10,16 +10,14 @@ class ShapeBaseController extends WaxController {
   public $user_model = "ShapeUser"; //user model
   public $user_table = "shape_user"; //user table
   public $login_path = "/shape/login"; //path to login
-  public $login_success = "/shape/dashboard";
+  public $login_success = "/shape/dashboard"; //default place to go to
   public static $current_user = false; //logged in user object, this set to false means an unauthenticated request and it should be checked on every request
   public $authenticate=false;
   
   public $base_permissions = array("enabled","menu","create","view","delete","edit"); //base permissions to be merged with extended ones
   public $permissions = array(); //stub for extendable permissions, can be added to extended controllers easily
   
-  
-  
-	function __construct($run_init = true) {
+  function __construct($run_init = true) {
     parent::__construct($run_init);
 	  if($run_init) $this->shape_init();
 	}
@@ -55,7 +53,7 @@ class ShapeBaseController extends WaxController {
   }
   
   /**
-   * basic login funciton
+   * login function
    *
    * @return void
    */
