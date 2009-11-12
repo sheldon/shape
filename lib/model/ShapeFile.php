@@ -1,5 +1,5 @@
 <?php
-class ShapeUser extends WaxModel {
+class ShapeFile extends WaxModel {
   public function setup() {
     $this->define("filename", "CharField");
     $this->define("path", "CharField");
