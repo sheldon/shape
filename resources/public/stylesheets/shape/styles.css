@@ -415,7 +415,56 @@ height:200px;/*must have*/}
 .ui-tabs .ui-tabs-panel{padding:1em 1.4em;display:block;border-width:0;background:none;}
 .ui-tabs .ui-tabs-hide{display:none !important;}
 
+/** HEADERS **/
+h1, h2{color:#FF0084;}
+h1{font-size:153.9%;font-weight:bold;} /*20pt*/
+h2{font-size:138.5%;} /*16pt*/
+h3,h4{color:#66ACF5;}
+h3{font-size:123.1%;} /*16pt*/
+h4{font-size:116%;} /*15pt*/
+h1,h2,h3,h4{margin-bottom:10px;}
+/** FORMS - login **/
+form.waxform fieldset label, form fieldset li label{
+  font-size:116%;
+  font-weight:bold;
+  display:block;
+  padding:3px;
+  float:left;
+  clear:both;
+}
+form.waxform fieldset input.text_field{
+  padding:3px;
+  font-size:108%;
+  clear:both;
+  margin:0 0 6px 0;
+  float:left;  
+}
+form.waxform fieldset input.submit_field{
+  clear:both;
+  margin:6px 0;
+  float:left;
+}
+/** MESSAGES **/
+.user_messages{
+  -moz-border-radius:2px;
+  -webkit-border-radius:2px;
+  border:1px solid #CCCCCC;
+  color:#444444;
+  background:url('/images/shape/custom/info.jpg') no-repeat 10px 10px;
+  padding:8px 8px 8px 28px;
+  margin-bottom:20px;
+}
 
+.user_errors{
+  -moz-border-radius:2px;
+  -webkit-border-radius:2px;
+  border:1px solid #ff0084;
+  color:#444444;
+  padding:8px 8px 8px 28px;
+  font-weight:bold;
+  margin-bottom:20px;
+  background:url('/images/shape/custom/error.jpg') no-repeat 10px 10px;
+}
 /** LAYOUT**/
 #heading{border-width:0;}
   #heading li{font-size:123%;}
@@ -456,3 +505,9 @@ height:200px;/*must have*/}
  margin-left:25%; 
  width:74%;
 }
+/*login page*/
+body.shape-login #content{width:50%;margin:30px auto;}
+body.shape-login #menu_container{display:none;width:0;}
+body.shape-login #page{width:100%;margin:auto;}
+body.shape-login #page form{width:180px;margin:10px auto;}
+body.shape-login #page h1{text-align:center;}
