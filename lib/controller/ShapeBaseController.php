@@ -25,6 +25,10 @@ class ShapeBaseController extends WaxController {
   public $shape_content;
   
   public $widgets = false; //array of partial widgets to include ["path/_towidget"] style
+  
+  public $this_page=1;
+  public $per_page=20;
+  
   function __construct($run_init = true) {
     parent::__construct($run_init);
 	  if($run_init) $this->shape_init();
