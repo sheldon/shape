@@ -23,9 +23,10 @@ class ShapeBaseController extends WaxController {
 	* Deferred constructor, so that Shape Controllers can be constructed without any code running if necessary
 	**/
 	public function shape_init() {
+    $route = rtrim($_SERVER['REQUEST_URI'], "/"); //remove the / at the end of any url    
 	  //merge base permissions into extended ones
 	  $this->permissions = array_unique(array_merge($this->base_permissions,$this->permissions));
-	  if(!$this->auth()) $this->redirect_to($this->login_path);
+	  if(!$this->auth() && $route != $this->login_path) $this->redirect_to($this->login_path);
 	}
   /**
    * auth process. first check if a user exists. then check if they are allowed to do what they're trying to.
@@ -38,4 +39,12 @@ class ShapeBaseController extends WaxController {
 		if(self::$current_user = $auth->get_user()) return true;
 		return false;
   }
+  
+  /**
+   * basic login funciton
+   *
+   * @return void
+   */
+  public function login(){}
+  
 }?>
