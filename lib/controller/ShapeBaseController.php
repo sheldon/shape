@@ -76,7 +76,7 @@ class ShapeBaseController extends WaxController {
       elseif($values['username'] && !$values['password']) Session::add_error('Please enter a password');
       else{
         if($this->authenticate->verify($values['username'], $values['password'])){
-          Session:add_message('Welcome Back '.$values['username']);
+          Session::add_message('Welcome Back '.$values['username']);
           self::$current_user = $this->authenticate->get_user();
           if($redirect = Session::get('shape_redirect_to')) $this->redirect_to($redirect);
           else $this->redirect_to($this->login_success);
