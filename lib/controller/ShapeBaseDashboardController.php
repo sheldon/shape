@@ -1,6 +1,6 @@
 <?php
 class ShapeBaseDashboardController extends ShapeController {
-  public $widgets = array("shape/dashboard/_search","shape/dashboard/_summary", "shape/dashboard/_analytics", "shape/dashboard/_recentpages");
+  public $widgets = array("shape/dashboard/_search", "shape/dashboard/_analytics", "shape/dashboard/_summary", "shape/dashboard/_recentpages");
 
   //blank out the menu function
   public function _menu(){}
