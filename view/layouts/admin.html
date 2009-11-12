@@ -19,7 +19,9 @@
   
   <div id="heading" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
     <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-      <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="/shape/dashboard" title="Shape">Shape CMS</a></li>
+      <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="/shape/dashboard" title="Shape">Shape</a></li>
+      <li class="ui-state-default ui-corner-top smaller"><a href="/" title="Shape"><?=$site_name?></a></li>
+      <li class="ui-state-default ui-corner-top smaller"><a href="/shape/users" title="Shape">logged in as (<?=$current_user->fullname()?>)</a></li>
     </ul>    
   </div>
   
