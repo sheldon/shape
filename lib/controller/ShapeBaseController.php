@@ -30,7 +30,10 @@ class ShapeBaseController extends WaxController {
     $route = rtrim($_SERVER['REQUEST_URI'], "/"); //remove the / at the end of any url    
 	  //merge base permissions into extended ones
 	  $this->permissions = array_unique(array_merge($this->base_permissions,$this->permissions));
-	  if(!$this->auth() && $route != $this->login_path) $this->redirect_to($this->login_path);
+	  if(!$this->auth() && $route != $this->login_path){
+	    Session::set('shape_redirect_to', $route);
+	    $this->redirect_to($this->login_path);
+    }
 	  /*
 	    although wax is flagging use_plugin as [DEPRECATION] it still uses it everywhere and doesnt use the plugins array
 	    so until then this will be commented out and will use the declaration above
