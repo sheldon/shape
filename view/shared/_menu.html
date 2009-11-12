@@ -1,0 +1,5 @@
+<ul class="shape_listing">
+  <?foreach($shape_content as $i=>$content):?>
+  <li class='list_item item<?=$i?> type<?=fmod($i,2)?>'><a href="/shape/page/edit/<?=$content->primval?>" title="Edit <?=$content->title?>" class='shape-page-list-item load_trigger'><?=$content->title?></a></li>
+  <?endforeach?>
+</ul>
