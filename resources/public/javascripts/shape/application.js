@@ -18,6 +18,10 @@ function main_menu(){
     function(){jQuery(this).addClass('ui-state-hover');},
     function(){jQuery(this).removeClass('ui-state-hover');}
   );
+  jQuery(menu_id+' ul.shape_listing li .icons a').hover(
+    function(){jQuery(this).addClass('active');},
+    function(){jQuery(this).removeClass('active');}
+  );
   
 }
 /*
