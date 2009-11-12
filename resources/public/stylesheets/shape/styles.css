@@ -423,7 +423,8 @@ h3,h4{color:#66ACF5;}
 h3{font-size:123.1%;} /*16pt*/
 h4{font-size:116%;} /*15pt*/
 h1,h2,h3,h4{margin-bottom:10px;}
-/** FORMS - login **/
+/** FORMS **/
+/*login*/
 form.waxform fieldset label, form fieldset li label{
   font-size:116%;
   font-weight:bold;
@@ -443,6 +444,19 @@ form.waxform fieldset input.submit_field{
   clear:both;
   margin:6px 0;
   float:left;
+}
+/*widgets*/
+form.widget-form{
+  margin:10px 0;
+}
+form.widget-form input.text_field{
+  padding:3px;
+  font-size:108%;
+  margin:0 0 6px 0;
+}
+form.widget-form label{
+  font-size:108%;
+  padding:3px 0px;
 }
 /** MESSAGES **/
 .user_messages{
@@ -515,11 +529,16 @@ form.waxform fieldset input.submit_field{
   border:1px solid #CCCCCC;
 }
   .widget-title{
-    padding:5px 4px 3px 4px;
+    padding:5px 4px 3px 8px;
     font-weight:normal;
     border-width:0;
     margin:0;
   }
+  .widget-content{
+    padding:10px;
+    color:#444444;
+  }
+
 /*login page*/
 body.shape-login #content{width:50%;margin:30px auto;}
 body.shape-login #menu_container{display:none;width:0;}
