@@ -11,7 +11,7 @@ class ShapeBaseController extends WaxController {
   public $user_table = "shape_user"; //user table
   public $login_path = "/shape/login"; //path to login
   public $login_success = "/shape/dashboard"; //default place to go to
-  public static $current_user = false; //logged in user object, this set to false means an unauthenticated request and it should be checked on every request
+  public $current_user = false; //logged in user object, this set to false means an unauthenticated request and it should be checked on every request
   public $authenticate=false;
   
   public $base_permissions = array("enabled","menu","create","view","delete","edit"); //base permissions to be merged with extended ones
@@ -46,9 +46,9 @@ class ShapeBaseController extends WaxController {
    * @return void
    */
   public function auth(){
-    if(self::$current_user) return true;
+    if($this->current_user) return true;
 		$this->authenticate = new WaxAuthDb(array("encrypt"=>true, "db_table"=>$this->user_table, "session_key"=>"shape_user_cookie"));
-		if(self::$current_user = $this->authenticate->get_user()) return true;
+		if($this->current_user = $this->authenticate->get_user()) return true;
 		return false;
   }
   
@@ -75,7 +75,7 @@ class ShapeBaseController extends WaxController {
       else{
         if($this->authenticate->verify($values['username'], $values['password'])){
           Session::add_message('Welcome Back '.$values['username']);
-          self::$current_user = $this->authenticate->get_user();
+          $this->current_user = $this->authenticate->get_user();
           if($redirect = Session::get('shape_redirect_to')) $this->redirect_to($redirect);
           else $this->redirect_to($this->login_success);
         }else Session::add_error('Sorry, those details cannot be found, please try again.');
