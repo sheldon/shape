@@ -445,8 +445,11 @@ height:200px;/*must have*/}
       width:16px;
       padding:0;
       display:inline-block;
-      margin-left:3px;
-    }    
+      margin-left:4px;
+    } 
+    .ui-state-hover .icons a.active{
+      background-image:url('/images/shape/ui/ui-icons_ff0084_256x240.png');
+    }   
     
 /*content div*/ 
 #page{
