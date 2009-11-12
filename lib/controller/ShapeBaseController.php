@@ -17,6 +17,8 @@ class ShapeBaseController extends WaxController {
   public $base_permissions = array("enabled","menu","create","view","delete","edit"); //base permissions to be merged with extended ones
   public $permissions = array(); //stub for extendable permissions, can be added to extended controllers easily
   
+  public $site_name;
+  
   function __construct($run_init = true) {
     parent::__construct($run_init);
 	  if($run_init) $this->shape_init();
@@ -33,6 +35,7 @@ class ShapeBaseController extends WaxController {
 	    Session::set('shape_redirect_to', $route);
 	    $this->redirect_to($this->login_path);
     }
+    $this->site_name = $_SERVER['HTTP_HOST'];
 	  /*
 	    although wax is flagging use_plugin as [DEPRECATION] it still uses it everywhere and doesnt use the plugins array
 	    so until then this will be commented out and will use the declaration above
