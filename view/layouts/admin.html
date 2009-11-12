@@ -3,11 +3,39 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-  <title>Shape</title>
+  <link rel="stylesheet" href="/stylesheets/cms/styles.css" type="text/css" media="all" title="no title" charset="utf-8">
+  
+  
+  <script src='http://www.google.com/jsapi'  type='text/javascript'></script>	
+  <script type='text/javascript'>                      
+  google.load('jquery', '1.3');
+	google.load('jqueryui', '1.7');
+  </script>
+  
+  
+  <title><?=ucwords(str_replace("/", " - ", $controller))?> - <?=ucwords($action)?></title>
 </head>
-<body>
-  <?=error_messages()?>
-  <?=info_messages()?>
-  <?=$content_for_layout?>
+<body id="<?=str_replace("/", "-", $controller)?>" class="shape_cms <?=str_replace("/", "-", $controller)?>-<?=$action?>">
+  
+  <div id="heading" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+    <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+      <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="/shape/dashboard" title="Shape">Shape CMS</a></li>
+    </ul>    
+  </div>
+  
+  <div id="content" class="clearfix">
+    <div id="menu_container">
+      <?=partial("_menu", $this)?>
+    </div>
+    <div id="page" class="clearfix">
+      <?=error_messages()?>
+      <?=info_messages()?>
+      <?=$content_for_layout?>
+    </div>
+  </div>
+  
+  <div id="footer">
+    
+  </div>
 </body>
 </html>
