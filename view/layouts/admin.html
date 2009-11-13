@@ -15,7 +15,7 @@
   
   <title><?=ucwords(str_replace("/", " - ", $controller))?> - <?=ucwords($action)?></title>
 </head>
-<body id="<?=str_replace("/", "-", $controller)?>" class="shape_cms <?=str_replace("/", "-", $controller)?>-<?=$action?>">
+<body id="<?=str_replace("/", "-", $controller)?>" class="shape_cms <?=str_replace("/", "-", $controller)?>-<?=$action?> <?=$action?> <?if($model->primval):?>model<?endif?>">
   
   <div id="heading" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
     <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
