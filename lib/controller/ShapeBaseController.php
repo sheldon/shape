@@ -18,13 +18,14 @@ class ShapeBaseController extends WaxController {
   public $permissions = array(); //stub for extendable permissions, can be added to extended controllers easily
   
   public $model_class;
-  public $model_order;
+  public $model_order;  
+  public $shape_content;
+  public $model; // the working model
+  public $wax_form; //wax form for the model  
+  public $filters = array();
   
   public $site_name;
-  
-  public $shape_content;
-  
-  public $widgets = false; //array of partial widgets to include ["path/_towidget"] style
+  public $widgets = array("shape/_search", "shape/_analytics", "shape/_summary", "shape/_recentpages"); //default widget
   
   public $this_page=1;
   public $per_page=20;
@@ -105,15 +106,50 @@ class ShapeBaseController extends WaxController {
   
   /** GENERIC ACTIONS **/
   public function index(){}
-  public function create(){}
-  public function edit(){}
+  /**
+   * remove any layout / view / partial cache files
+   */
+  public function clear_cache(){
+    foreach(glob(CACHE_DIR."layout/*") as $file) @unlink($file);
+    foreach(glob(CACHE_DIR."view/*") as $file) @unlink($file);
+    foreach(glob(CACHE_DIR."partial/*") as $file) @unlink($file);
+  }
+  /**
+   * create an empty skel object, save it and move along to edit
+   */
+  public function create(){
+    $model = new $this->model_class;
+     //find the required fields and give them default values
+    foreach($model->columns as $name=>$values){
+      if($values[1]['unique']) $model->$name = time();
+      elseif($values[1] && $values[1]['required'] && !$values[1]['target_model']) {
+        if($values[0] == "FloatField" || $values[0] == "IntegerField" || $values[0] == "BooleanField") $model->$name = 0;
+        elseif($values[0] == "EmailField") $model->$name = "fill.me@in.com";
+      }else $model->$name = $name;
+    }
+    if($saved = $model->save()) $this->redirect_to("/".$this->controller."/edit/".$saved->primval);
+    else{
+      Session::add_message('Could not create!');
+      $this->redirect("/".$this->controller."/");
+    }
+  }
+  /**
+   * Edit function, doesn't do much, just create the page object
+   */
+  public function edit(){
+    //if no idea is found; add error and redirect
+    if(!$primval = Request::param('id')){
+      Session::add_message('Could not create!');
+      $this->redirect("/".$this->controller."/");
+    //otherwise create a model
+    }else $this->model = new $this->model_class($primval);
+    $this->wax_form = new WaxForm($this->model);
+        
+  }
+  
   public function delete(){}
   
   /** GENERIC PARTIALS **/
-  public function _listing(){
-    $model= new $this->model_class;
-    if(!$this->shape_content = $model->order($this->model_order)->page($this->this_page, $this->per_page)) $this->shape_content = array();
-  }
   /**
    * fetch everything for this model and spit it out
    */
@@ -121,5 +157,12 @@ class ShapeBaseController extends WaxController {
     $model= new $this->model_class;
     if(!$this->shape_content = $model->order($this->model_order)->all()) $this->shape_content = array();
   }
+  
+  /**widget partials**/
+  public function _search(){}
+  public function _summary(){}
+  public function _analytics(){}
+  public function _recentpages(){}
+  
   
 }?>

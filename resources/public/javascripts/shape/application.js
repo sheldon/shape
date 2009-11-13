@@ -12,9 +12,9 @@ Everything for the main menu runs from this function
 function main_menu(){    
   //menu accordion
   var acc_id = 'menu-'+jQuery('body').attr('id');
-  if(jQuery(acc_id).length) accordion(menu_id, {active: '#'+acc_id, collapsible:true});
+  if(jQuery("#"+acc_id).length) accordion(menu_id, {active: "#"+acc_id+"-title"});
   else accordion(menu_id, {collapsible:true, active:false});
-  
+
   //add active class for he dashboard
   if(acc_id == 'menu-shape-dashboard') jQuery('#menu-shape-dashboard h3').addClass('ui-state-active');
   
