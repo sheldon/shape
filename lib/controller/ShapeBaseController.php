@@ -17,14 +17,15 @@ class ShapeBaseController extends WaxController {
   public $base_permissions = array("enabled","menu","create","view","delete","edit"); //base permissions to be merged with extended ones
   public $permissions = array(); //stub for extendable permissions, can be added to extended controllers easily
   
-  public $model_class;
-  public $model_order;  
-  public $shape_content;
+  public $model_class; //class name
+  public $model_order;  //order
+  public $shape_content; //array of content
   public $model; // the working model
   public $wax_form; //wax form for the model  
-  public $filters = array();
+  public $filters = array(); //columns to filter on
+  public $string_field = "title"; //field used in list
   
-  public $site_name;
+  public $site_name; //$_SERVER['http_host']
   public $widgets = array("shape/pages/_search", "shape/statistics/_analytics", "shape/dashboard/_summary", "shape/pages/_recentpages"); //default widget
   
   public $this_page=1;
