@@ -461,6 +461,7 @@ form.widget-form label{
 #search-filter-results{
   position:absolute;
   width:195px;
+  height:150px;
   padding:5px 5px 5px 0;
   border:1px solid #cccccc;
   background:white;
@@ -468,6 +469,7 @@ form.widget-form label{
   margin-top:-17px;
   display:none;
   overflow:hidden;
+  overflow-y:auto;
 }
 
 /** MESSAGES **/
