@@ -30,8 +30,9 @@ function filters(filter_form){
     //only run the filter on certain keys
     if(e.which == 8 || e.which == 32 || (65 <= e.which && e.which <= 65 + 25) || (97 <= e.which && e.which <= 97 + 25) || e.which == 160 || e.which == 127){
       jQuery(this).children(filter_config.keychange_class).removeClass(filter_config.success_class).removeClass(filter_config.error_class).addClass(filter_config.loading_class);
-      var obj =jQuery(this)[0].id;
-      filter_config.timer = setTimeout("submit_filter('#"+obj+"')", timeout);
+      var obj =jQuery(this);
+      var filter_func = function(){submit_filter(obj); };
+      filter_config.timer = setTimeout(filter_func, timeout);
     }
   });
   
@@ -44,18 +45,17 @@ function filters(filter_form){
 /**
  * function to run the filter command
  */
-function submit_filter(form_obj){
-  var destination = jQuery(form_obj).parents('form').attr('action'),
-      method = jQuery(form_obj).parents('form').attr('method'),
+function submit_filter(filter_box){
+  var destination = jQuery(filter_box).parents('form').attr('action')+".ajax",
+      method = jQuery(filter_box).parents('form').attr('method'),
       replace = "#"+filter_config.replace_id,
-      form_data = jQuery(form_obj).parents('form').serialize();
-  
-  console.log(jQuery(form_obj).parents('form'));
+      form_data = jQuery(filter_box).parents('form').serialize();
+  //clear timeout
   clearTimeout(filter_config.timer);
   
-  if(jQuery(form_obj).attr('rel')) replace = '#'+jQuery(form_obj).attr('rel'); //overwrite the replacement
-  //remove classes etc
-  jQuery(form_obj).children(filter_config.keychange_class).removeClass(filter_config.success_class).removeClass(filter_config.error_class).addClass(filter_config.loading_class);
+  if(jQuery(filter_box).parents('form').attr('rel')) replace = '#'+jQuery(filter_box).parents('form').attr('rel'); //overwrite the replacement
+  //remove classes
+  jQuery(filter_box).removeClass(filter_config.success_class).removeClass(filter_config.error_class).addClass(filter_config.loading_class);
   //the ajax call
   jQuery.ajax({
     "timeout": filter_config.ajax_timeout,
@@ -63,17 +63,17 @@ function submit_filter(form_obj){
     "url":destination,
     "data": form_data,
     "success":function(result){
-      jQuery(form_obj).children(filter_config.keychange_class).addClass(filter_config.success_class).removeClass(filter_config.error_class).removeClass(filter_config.loading_class);
+      jQuery(filter_box).addClass(filter_config.success_class).removeClass(filter_config.error_class).removeClass(filter_config.loading_class);
       jQuery(replace).html(result);
       clearTimeout(filter_config.timer);
     },
     "error":function(){
-      jQuery(form_obj).children(filter_config.keychange_class).removeClass(filter_config.success_class).addClass(filter_config.error_class).removeClass(filter_config.loading_class);
+      jQuery(filter_box).removeClass(filter_config.success_class).addClass(filter_config.error_class).removeClass(filter_config.loading_class);
       clearTimeout(filter_config.timer);
     }
   });
   
-}
+};
 
 /**
  * Everything for the main menu runs from this function
@@ -96,9 +96,8 @@ function main_menu(){
     function(){jQuery(this).addClass(menu_config.h3_active_class);},
     function(){jQuery(this).removeClass(menu_config.h3_active_class);}
   );
-  
-  
-}
+
+};
 /**
  * Common warning functions
  */
@@ -106,16 +105,15 @@ function warnings(){
   jQuery("."+warnings_config.class_name).click(function(){
     return confirm('Are you sure you want to do that?');
   });
-}
+};
 
 function widgets(){
   
-}
+};
 
 
 /** initialise everything **/
-jQuery(document).ready(function(){
-  
+jQuery(document).ready(function(){  
   main_menu();
   warnings();
   widgets();
