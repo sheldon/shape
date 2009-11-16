@@ -7,7 +7,7 @@
       <a href="/<?=$controller?>/delete/<?=$content->primval?>" class="ui-icon ui-icon-circle-close delete" title="DELETE">&nbsp;</a>
     </span>    
     <span class="ui-icon ui-icon-triangle-1-e">&nbsp;</span>      
-    <a href="/<?=$controller?>/edit/<?=$content->primval?>" title="Editing - <?=$content->title?>" class='<?=str_replace("/", "-", $controller)?>-list-item inline-load'><?=$content->$string_field?></a>      
+    <a href="/<?=$controller?>/edit/<?=$content->primval?>" title="Editing - <?=$content->title?>" class='<?=str_replace("/", "-", $controller)?>-list-item show-children'><?=$content->$string_field?></a>      
   </li>
   <?endforeach?>
 <?else:?>
