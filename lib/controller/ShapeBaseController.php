@@ -19,7 +19,7 @@ class ShapeBaseController extends WaxController {
   
   public $model_class; //class name
   public $model_order;  //order
-  public $shape_content; //array of content
+  public $shape_models; //WaxRecordSet of models
   public $model; // the working model
   public $wax_form; //wax form for the model  
   public $filters = array(); //columns to filter on
