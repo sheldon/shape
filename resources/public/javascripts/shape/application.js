@@ -77,11 +77,13 @@ function submit_filter(filter_box){
       jQuery(filter_box).addClass(filter_config.success_class).removeClass(filter_config.error_class).removeClass(filter_config.loading_class);
       if(show_hide) jQuery(replace).show();
       jQuery(replace).html(result);
+      page_init();
       clearTimeout(filter_config.timer);
     },
     "error":function(){
       jQuery(filter_box).removeClass(filter_config.success_class).addClass(filter_config.error_class).removeClass(filter_config.loading_class);
       if(show_hide) jQuery(replace).hide();
+      page_init();
       clearTimeout(filter_config.timer);
     }
   });
