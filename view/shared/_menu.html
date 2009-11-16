@@ -1,4 +1,4 @@
-<ul class="shape_listing <?=str_replace("/", "-", $controller)?>-list">
+<ul class="shape_listing <?=str_replace("/", "-", $controller)?>-list" id="menu-<?=str_replace("/", "-", $controller)?>-list">
   <?foreach($shape_content as $i=>$content):?>
   <li class='list_item item<?=$i?> type<?=fmod($i,2)?> '>
     
