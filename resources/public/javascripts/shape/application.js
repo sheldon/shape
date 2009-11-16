@@ -91,6 +91,45 @@ function submit_filter(filter_box){
 };
 
 /**
+ * FUNCTIONS FOR INLINE LOADING OF CONTENT
+ * a href attributes
+ *  href - location to get data from (.ajax will be appended)
+ *  method - to force switch from post to get
+ *  rel - override what div to replace the content with  
+ */
+function inline_load(loader){
+  var conf = inline_load_config;
+  if(typeof(loader) == "undefined") var loader = conf.class_name;
+  jQuery("."+loader).click(function(){
+    var destination = jQuery(this).attr('href')+".ajax",
+        method = "post"
+        replace = inline_load_config.replace_id;
+    if(jQuery(this).attr('method')) method = jQuery(this).attr('method');
+    if(jQuery(this).attr('rel')) replace = jQuery(this).attr('rel');
+    
+    jQuery(this).removeClass(conf.error_class).removeClass(conf.success_class).addClass(conf.loading_class);    
+    jQuery("#"+replace).removeClass(conf.error_class).removeClass(conf.success_class).addClass(conf.loading_class).html(''); //remove classes & blank the html
+    
+    jQuery.ajax({
+      "timeout":inline_load_config.ajax_timeout,
+      "type":method,
+      "url":destination,
+      "success":function(result){
+        jQuery(this).removeClass(conf.error_class).addClass(conf.success_class).removeClass(conf.loading_class);    
+        jQuery("#"+replace).removeClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class).html(result); //remove classes & blank the html 
+        page_init();
+      },
+      "error":function(){
+        jQuery(this).addClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class);    
+        jQuery("#"+replace).addClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class); //remove classes & blank the html 
+        page_init();
+      }
+    });
+    return false;
+  });
+}
+
+/**
  * Everything for the main menu runs from this function
  */
 function main_menu(){    
