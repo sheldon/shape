@@ -471,6 +471,19 @@ form.widget-form label{
   overflow:hidden;
   overflow-y:auto;
 }
+/*spliting forms up by lis*/
+form fieldset.li_spilt li{
+  float:left;
+  margin-right:2%;
+}
+form fieldset.split2 li{width:45%;}
+form fieldset.split3 li{width:26%;}
+form fieldset.split4 li{width:12%;}
+/*splitting forms up by fieldsets*/
+form fieldset.split{
+  float:left;
+  margin-right:2%;
+}
 
 /** MESSAGES **/
 .user_messages{
@@ -533,6 +546,7 @@ form.widget-form label{
 /*content div*/ 
 #page{
  margin-left:235px; 
+ margin-right:3px;
 }
 /**widgets**/
 .widget{
