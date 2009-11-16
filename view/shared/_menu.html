@@ -3,14 +3,14 @@
   <li class='list_item item<?=$i?> type<?=fmod($i,2)?>'>
     
     <span class='icons'>      
-      <a href="/<?=$controller?>/edit/<?=$content->primval?>" class="ui-icon ui-icon-pencil edit" title="EDIT"></a>
-      <a href="/<?=$controller?>/delete/<?=$content->primval?>" class="ui-icon ui-icon-circle-close delete" class="DELETE"></a>
+      <a href="/<?=$controller?>/edit/<?=$content->primval?>" class="ui-icon ui-icon-pencil edit inline-load" title="EDIT"></a>
+      <a href="/<?=$controller?>/delete/<?=$content->primval?>" class="ui-icon ui-icon-circle-close delete" title="DELETE"></a>
     </span>
     
     <span class="ui-icon ui-icon-triangle-1-e"></span>
     
     
-    <a href="/<?=$controller?>/edit/<?=$content->primval?>" title="Edit <?=$content->title?>" class='<?=str_replace("/", "-", $controller)?>-list-item load_trigger'><?=$content->title?></a>
+    <a href="/<?=$controller?>/edit/<?=$content->primval?>" title="Edit <?=$content->title?>" class='<?=str_replace("/", "-", $controller)?>-list-item inline-load'><?=$content->title?></a>
     
     
   </li>
