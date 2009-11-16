@@ -508,17 +508,13 @@ form.widget-form label{
   float:left;
   width:23%;
 }
-  #menu_container .icons{display:none;float:right;}  
+  #menu_container .icons{float:right;display:block;}  
   #menu_container .ui-accordion-content{padding:0}
-    #menu_container li{padding:3px 4px 3px 6px;}
+    #menu_container li{padding:3px 4px 3px 6px;;}
       #menu_container li a{padding:2px 15px 2px 20px;text-decoration:none;}
       #menu_container li span.ui-icon{position:absolute;}      
       
-  #menu_container .ui-state-hover .icons{
-    display:block;
-    float:right;
-  }
-    #menu_container .ui-state-hover .icons a{
+    #menu_container .icons a{
       width:16px;
       padding:0;
       display:inline-block;
