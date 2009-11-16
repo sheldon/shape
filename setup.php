@@ -1,4 +1,5 @@
 <?
+
 /**
  * Load up some information about the plugin, branch, directory etc 
  */
