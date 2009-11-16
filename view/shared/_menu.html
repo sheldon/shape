@@ -1,6 +1,6 @@
 <ul class="shape_listing <?=str_replace("/", "-", $controller)?>-list">
   <?foreach($shape_content as $i=>$content):?>
-  <li class='list_item item<?=$i?> type<?=fmod($i,2)?>'>
+  <li class='list_item item<?=$i?> type<?=fmod($i,2)?> '>
     
     <span class='icons'>      
       <a href="/<?=$controller?>/edit/<?=$content->primval?>" class="ui-icon ui-icon-pencil edit inline-load" title="EDIT">&nbsp;</a>
