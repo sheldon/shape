@@ -25,7 +25,7 @@ class ShapeBaseController extends WaxController {
   public $filters = array();
   
   public $site_name;
-  public $widgets = array("shape/_search", "shape/_analytics", "shape/_summary", "shape/_recentpages"); //default widget
+  public $widgets = array("shape/pages/_search", "shape/statistics/_analytics", "shape/dashboard/_summary", "shape/pages/_recentpages"); //default widget
   
   public $this_page=1;
   public $per_page=20;
