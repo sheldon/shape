@@ -24,7 +24,7 @@ function accordion_alteration(obj){
  * form attributes:
  *   action - where the ajax call will go (it will have a .ajax ext)
  *   method - if the call will be post or get
- *   rel - the id of the div to replace
+ *   replace - the id of the div to replace
  *   show_and_hide - if the results div is to be show / hidden - like a drop down filter list
  * form data will be serialsed and sent along
  * content returned is presumed to be ajax
@@ -47,7 +47,7 @@ function filters(filter_form){
     //if short then clear
     if(jQuery(this).val().length < 1){
       var replace = "#"+filter_config.replace_id;
-      if(jQuery(filter_form).attr('rel')) replace = "#"+jQuery(filter_form).attr('rel');
+      if(jQuery(filter_form).attr('replace')) replace = "#"+jQuery(filter_form).attr('replace');
       if(jQuery(filter_form).attr('show_and_hide')) jQuery(replace).hide();
     //only run the filter on certain keys  
     }else if(e.which == 8 || e.which == 32 || (65 <= e.which && e.which <= 65 + 25) || (97 <= e.which && e.which <= 97 + 25) || e.which == 160 || e.which == 127){
@@ -77,7 +77,7 @@ function submit_filter(filter_box){
       form_data = jQuery(filter_box).parents('form').serialize(),
       show_hide = jQuery(filter_box).parents('form').attr('show_and_hide');
   
-  if(jQuery(filter_box).parents('form').attr('rel')) replace = '#'+jQuery(filter_box).parents('form').attr('rel'); //overwrite the replacement
+  if(jQuery(filter_box).parents('form').attr('replace')) replace = '#'+jQuery(filter_box).parents('form').attr('replace'); //overwrite the replacement
   //remove classes
   jQuery(filter_box).removeClass(filter_config.success_class).removeClass(filter_config.error_class).addClass(filter_config.loading_class);
   //the ajax call
@@ -108,7 +108,7 @@ function submit_filter(filter_box){
  * a href attributes
  *  href - location to get data from (.ajax will be appended)
  *  method - to force switch from post to get
- *  rel - override what div to replace the content with  
+ *  replace - override what div to replace the content with  
  *  title - this will replace the page title on successful load
  */
 function inline_load(loader){
@@ -128,7 +128,7 @@ function load_page(obj){
       method = "post"
       replace = conf.replace_id;
   if(jQuery(obj).attr('method')) method = jQuery(obj).attr('method');
-  if(jQuery(obj).attr('rel')) replace = jQuery(obj).attr('rel');
+  if(jQuery(obj).attr('replace')) replace = jQuery(obj).attr('replace');
   
   jQuery(obj).parents('.list_item').removeClass(conf.error_class).removeClass(conf.success_class).addClass(conf.loading_class);    
   jQuery("#"+replace).removeClass(conf.error_class).removeClass(conf.success_class).addClass(conf.loading_class).html(''); //remove classes & blank the html
