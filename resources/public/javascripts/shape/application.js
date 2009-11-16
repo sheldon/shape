@@ -1,7 +1,7 @@
 /** CONFIG VARS **/
 var menu_config = {"id":"main_menu", "h3_active_class":"active", "h3_hover_class":"ui-state-hover", "active":"ui-state-active"};
 var warnings_config = {"class_name":"delete"};
-var inline_load_config = {"class_name": "inline-load", "replace_id":"page", "loading_class":"loading-inline-load", "error_class":"error-inline-load", "success_class":"success-inline-load", "ajax_timeout":1200};
+var inline_load_config = {"class_name": "inline-load", "replace_id":"page", "loading_class":"loading-inline-load", "error_class":"error-inline-load", "success_class":"ui-state-error", "ajax_timeout":1200};
 var filter_config = {"class_name": "filter-form", "timeout":800, "replace_id":"page", "keychange_class":"text_field", "loading_class":"loading-filter", "error_class":"erorr-filter","success_class":"success-filter", "timer":false, "ajax_timeout":1200};
 
 /**
@@ -130,7 +130,8 @@ function load_page(obj){
   if(jQuery(obj).attr('method')) method = jQuery(obj).attr('method');
   if(jQuery(obj).attr('replace')) replace = jQuery(obj).attr('replace');
   
-  jQuery(obj).parents('.list_item').removeClass(conf.error_class).removeClass(conf.success_class).addClass(conf.loading_class);    
+  jQuery('#'+menu_config.id+" li").removeClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class);    
+  jQuery(obj).parents('.list_item').addClass(conf.loading_class);    
   jQuery("#"+replace).removeClass(conf.error_class).removeClass(conf.success_class).addClass(conf.loading_class).html(''); //remove classes & blank the html
   
   jQuery.ajax({
