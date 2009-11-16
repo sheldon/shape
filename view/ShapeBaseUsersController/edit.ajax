@@ -1,5 +1,29 @@
-<form action="" method="post" name="wax_form" class="waxform">
-  <fieldset>
+<h1 class="<?=str_replace("/", "-", $controller)?>-<?=$action?>-header shape-header">Editing '<?=$model->$string_field?>'</h1>
+
+<div class='small-widget-column clearfix'>
+  
+  <div class='ui-widget <?=str_replace("/", "-",$controller)?> widget clearfix'>
+    <h3 class='widget-title ui-widget-header ui-helper-clearfix ui-corner-all ui-state-default'>Reset Password</h3>
+  </div>  
+
+  <div class='ui-widget <?=str_replace("/", "-",$controller)?> widget clearfix'>
+    <h3 class='widget-title ui-widget-header ui-helper-clearfix ui-corner-all ui-state-default'>Recent Activity</h3>
+  </div>
+  
+</div>
+
+
+<div class='large-widget-column clearfix'>
+
+  <div class='ui-widget <?=str_replace("/", "-",$controller)?> widget clearfix large-widget'>
+    <h3 class='widget-title ui-widget-header ui-helper-clearfix ui-corner-all ui-state-default'>User Information</h3>
+    <div class="widget-content">
+      <form action="/<?=$controller?>/edit/<?=$model->primval?>" method="post" name="wax_form" class="waxform inline-submit">
+        <fieldset>
     
-  </fieldset>
-</form>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  
+</div>
