@@ -46,7 +46,7 @@ function filters(filter_form){
  * function to run the filter command
  */
 function submit_filter(filter_box){
-  var destination = jQuery(filter_box).parents('form').attr('action')+".ajax",
+  var destination = jQuery(filter_box).parents('form').attr('action')+".ajax", //all ajax calls to use the .ajax result
       method = jQuery(filter_box).parents('form').attr('method'),
       replace = "#"+filter_config.replace_id,
       form_data = jQuery(filter_box).parents('form').serialize();
