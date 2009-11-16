@@ -49,7 +49,8 @@ function submit_filter(filter_box){
   var destination = jQuery(filter_box).parents('form').attr('action')+".ajax", //all ajax calls to use the .ajax result
       method = jQuery(filter_box).parents('form').attr('method'),
       replace = "#"+filter_config.replace_id,
-      form_data = jQuery(filter_box).parents('form').serialize();
+      form_data = jQuery(filter_box).parents('form').serialize(),
+      show_hide = jQuery(filter_box).parents('form').attr('show_and_hide');
   //clear timeout
   clearTimeout(filter_config.timer);
   
@@ -64,11 +65,13 @@ function submit_filter(filter_box){
     "data": form_data,
     "success":function(result){
       jQuery(filter_box).addClass(filter_config.success_class).removeClass(filter_config.error_class).removeClass(filter_config.loading_class);
+      if(show_hide) jQuery(replace).show();
       jQuery(replace).html(result);
       clearTimeout(filter_config.timer);
     },
     "error":function(){
       jQuery(filter_box).removeClass(filter_config.success_class).addClass(filter_config.error_class).removeClass(filter_config.loading_class);
+      if(show_hide) jQuery(replace).hide();
       clearTimeout(filter_config.timer);
     }
   });
