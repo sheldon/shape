@@ -13,7 +13,14 @@ function accordion(container, opts){
 };
 
 /**
- * FUNCTIONS FOR FILTERS
+ * FUNCTIONS FOR FILTER FORMS
+ * form attributes:
+ *   action - where the ajax call will go (it will have a .ajax ext)
+ *   method - if the call will be post or get
+ *   rel - the id of the div to replace
+ *   show_and_hide - if the results div is to be show / hidden - like a drop down filter list
+ * form data will be serialsed and sent along
+ * content returned is presumed to be ajax
  */
 /**
  * main handler
