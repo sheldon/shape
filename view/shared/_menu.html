@@ -4,7 +4,6 @@
   <li class='list_item item<?=$i?> type<?=fmod($i,2)?> '>    
     <span class='icons'>      
       <a href="/<?=$controller?>/edit/<?=$content->primval?>" class="ui-icon ui-icon-pencil edit inline-load" title="Editing - <?=$content->$string_field?>">&nbsp;</a>
-      <a href="/<?=$controller?>/delete/<?=$content->primval?>" class="ui-icon ui-icon-circle-close delete" title="DELETE">&nbsp;</a>
     </span>    
     <span class="ui-icon ui-icon-triangle-1-e">&nbsp;</span>      
     <a href="/<?=$controller?>/edit/<?=$content->primval?>" title="Editing - <?=$content->title?>" class='<?=str_replace("/", "-", $controller)?>-list-item <?if($multi_level):?>show-children<?else:?>inline-load<?endif?>'><?=$content->$string_field?></a>      
