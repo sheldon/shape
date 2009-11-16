@@ -118,10 +118,14 @@ class ShapeBaseController extends WaxController {
     foreach(glob(CACHE_DIR."view/*") as $file) @unlink($file);
     foreach(glob(CACHE_DIR."partial/*") as $file) @unlink($file);
   }
+  
+  public function create(){
+    
+  }
   /**
    * create an empty skel object, save it and move along to edit
    */
-  public function create(){
+  protected function new_model(){
     $model = new $this->model_class;
      //find the required fields and give them default values
     foreach($model->columns as $name=>$values){
@@ -131,22 +135,18 @@ class ShapeBaseController extends WaxController {
         elseif($values[0] == "EmailField") $model->$name = "fill.me@in.com";
       }else $model->$name = $name;
     }
-    if($saved = $model->save()) $this->redirect_to("/".$this->controller."/edit/".$saved->primval);
-    else{
-      Session::add_message('Could not create!');
-      $this->redirect("/".$this->controller."/");
-    }
+    if($saved = $model->save()) return $saved;
+    else return false;
   }
   /**
    * Edit function, doesn't do much, just create the page object
    */
-  public function edit(){
-    //if no idea is found; add error and redirect
-    if(!$primval = Request::param('id')){
-      Session::add_message('Could not create!');
-      $this->redirect("/".$this->controller."/");
-    //otherwise create a model
-    }else $this->model = new $this->model_class($primval);
+  public function edit($id=false){
+    $primval = Request::param('id');
+    if(is_numeric($id)) $this->model = new $this->model_class($primval);
+    //if no idea is found; then show not found page
+    else if(!$primval) $this->use_view = "_not_found";
+    else $this->model = new $this->model_class($primval);
     $this->wax_form = new WaxForm($this->model);
         
   }
