@@ -31,7 +31,8 @@ function filters(filter_form){
   if(typeof(filter_form) == "undefined") var filter_form = "."+filter_config.class_name;
   var timeout = filter_config.timeout;
   if(jQuery(filter_form).attr('timeout')) timeout = jQuery(filter_form).attr('timeout'); //overwrite the timeout with form attribute
-
+  //hide the submit buttons
+  jQuery(filter_form).find('input[type=submit]').hide();
   //keypress monitoring
   jQuery(filter_form).find("."+filter_config.keychange_class).keyup(function(e){ 
     //clear timeout
