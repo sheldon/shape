@@ -3,7 +3,7 @@
   <?foreach($shape_content as $i=>$content):?>
   <li class='list_item item<?=$i?> type<?=fmod($i,2)?> '>    
     <span class='icons'>      
-      <a href="/<?=$controller?>/edit/<?=$content->primval?>" class="ui-icon ui-icon-pencil edit inline-load" title="Editing - <?=$content->$string_field?>">&nbsp;</a>
+      <a href="/<?=$controller?>/edit/<?=$content->primval?>" class="ui-icon ui-icon-wrench edit inline-load" title="Editing - <?=$content->$string_field?>">&nbsp;</a>
       <a href="/<?=$controller?>/child/<?=$content->primval?>" class="ui-icon ui-icon-plusthick " title="Create Child for <?=$content->$string_field?>">&nbsp;</a>
     </span>    
     <span class="ui-icon ui-icon-triangle-1-e">&nbsp;</span>      
