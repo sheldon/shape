@@ -508,7 +508,7 @@ form.widget-form label{
   float:left;
   width:23%;
 }
-  #menu_container .icons{float:right;display:block;}  
+  #menu_container .icons{float:right;display:block;margin-right:8px;}  
   #menu_container .ui-accordion-content{padding:0}
     #menu_container li{padding:3px 4px 3px 6px;;}
       #menu_container li a{padding:2px 15px 2px 20px;text-decoration:none;}
