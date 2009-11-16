@@ -506,12 +506,12 @@ form.widget-form label{
 /*menu divs*/
 #menu_container{
   float:left;
-  width:23%;
+  width:220px;
 }
   #menu_container .icons{float:right;display:block;margin-right:8px;}  
   #menu_container .ui-accordion-content{padding:0}
     #menu_container li{padding:3px 4px 3px 6px;;}
-      #menu_container li a{padding:2px 15px 2px 20px;text-decoration:none;}
+      #menu_container li a{padding:2px 5px 2px 20px;text-decoration:none;}
       #menu_container li span.ui-icon{position:absolute;}      
       
     #menu_container .icons a{
@@ -532,14 +532,13 @@ form.widget-form label{
   }
 /*content div*/ 
 #page{
- margin-left:25%; 
- width:74%;
+ margin-left:235px; 
 }
 /**widgets**/
 .widget{
   float:left;
   padding:0;
-  margin:0 1% 1% 0;
+  margin:0 1% 10px 0;
   -moz-border-radius:2px;
   -webkit-border-radius:2px;
   border:1px solid #CCCCCC;
@@ -555,6 +554,13 @@ form.widget-form label{
     color:#444444;
   }
 
+/*large widgets are used in conjunction with a small right hand column - so needs right hand margin */
+.large-widget-column{margin-right:205px;}
+  .large-widget-column .widget{width:100%;}
+/*small-widget go on the right hand side*/
+.small-widget-column{width:190px;float:right;}
+  .small-widget-column .widget{width:100%;}
+  
 /*login page*/
 body.shape-login #content{width:50%;margin:30px auto;}
 body.shape-login #menu_container{display:none;width:0;}
