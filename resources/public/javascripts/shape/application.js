@@ -211,7 +211,7 @@ function widgets(){
  * Page init function - handles all ajax effect js
  */
 function page_init(){
-  
+  inline_load();
 };
 
 /** initialise everything **/
@@ -223,7 +223,6 @@ jQuery(document).ready(function(){
   filters();
   //nuts function that checks current address bar on page load to see if it can recall that page
   check_address_bar_for_page_load(); 
-  inline_load();
   /* functions called from page init are effected by ajax calls; so this function is recalled in each ajax call */
   page_init();
 });
