@@ -2,12 +2,14 @@
   <h3 class='widget-title ui-widget-header ui-helper-clearfix ui-corner-all ui-state-default'>Search</h3>
   <div class="widget-content">
     <p>Search for a piece of content by typing a word in the box below.</p>
-    <form action="/<?=$controller?>/_search" method="post" name="inline_search" class="widget-form filter-form">
+    <!-- the form attributes are used by the js to control where & how it gets data, and where it puts the output (rel) -->
+    <form action="/<?=$controller?>/_search" method="post" name="inline_search" class="widget-form filter-form" rel="search-filter-results" show_and_hide="true">
       <fieldset>
-        <label for="search_for">Search:</label>
-        <input type="text" name="search_for" id="search_for" class="input_field text_field" />
+        <label for="search_for" id="search_for_label">Search:</label>
+        <input type="text" name="search_for" id="search_for" class="input_field text_field"/>
         <input type="submit" name="submit" value="Go" class="input_field submit_field"/>
       </fieldset>      
     </form>
+    <div id="search-filter-results" class="clearfix"></div>
   </div>
 </div>
