@@ -30,9 +30,13 @@ class ShapeBaseController extends WaxController {
   public $this_page=1;
   public $per_page=20;
   
-  function __construct($run_init = true) {
+  public function __construct($run_init = true) {
     parent::__construct($run_init);
 	  if($run_init) $this->shape_init();
+	}
+	
+	public function controller_global(){
+	  $this->headers_and_layout();
 	}
 	
 	/** 
@@ -164,5 +168,12 @@ class ShapeBaseController extends WaxController {
   public function _analytics(){}
   public function _recentpages(){}
   
+  
+  /** protected function to check header & layout type **/
+  protected function headers_and_layout(){
+    if($this->use_format == "ajax" || $this->use_format == "json" || $this->use_format == "xml") $this->use_layout = false;
+    if($this->use_format == "xml") header("Content-Type: application/xml");
+    if($this->use_format == "json") header("Content-Type: application/json");
+  }
   
 }?>
