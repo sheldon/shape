@@ -466,6 +466,8 @@ form.widget-form label{
   background:white;
   margin-left:57px;
   margin-top:-17px;
+  display:none;
+  overflow:hidden;
 }
 
 /** MESSAGES **/
