@@ -11,7 +11,15 @@ function accordion(container, opts){
   if(jQuery(container).length && typeof(opts) != "undefined") jQuery(container).accordion(opts);
   else if(jQuery(container).length) jQuery(container).accordion();
 };
-
+/**
+ * used by loading functions to update the accordion menu
+ */
+function accordion_alteration(obj){
+  jQuery('#menu-shape-dashboard h3').removeClass('ui-state-active');
+  var trigger = "#"+jQuery(obj).parents('ul').attr('id').replace('-list', '-title');
+  console.log(trigger);
+  jQuery('#'+menu_config.id).accordion('activate', trigger);
+};
 /**
  * FUNCTIONS FOR FILTER FORMS
  * form attributes:
@@ -123,7 +131,7 @@ function load_page(obj){
   if(jQuery(obj).attr('method')) method = jQuery(obj).attr('method');
   if(jQuery(obj).attr('rel')) replace = jQuery(obj).attr('rel');
   
-  jQuery(obj).removeClass(conf.error_class).removeClass(conf.success_class).addClass(conf.loading_class);    
+  jQuery(obj).parents('.list_item').removeClass(conf.error_class).removeClass(conf.success_class).addClass(conf.loading_class);    
   jQuery("#"+replace).removeClass(conf.error_class).removeClass(conf.success_class).addClass(conf.loading_class).html(''); //remove classes & blank the html
   
   jQuery.ajax({
@@ -134,12 +142,13 @@ function load_page(obj){
       document.title = obj.title;
       if(window.location.toString().indexOf('#')>0) window.location = window.location.toString().substring(0, window.location.toString().indexOf('#')) + "#"+destination;
       else window.location = window.location.toString()+"#"+destination;
-      jQuery(obj).removeClass(conf.error_class).addClass(conf.success_class).removeClass(conf.loading_class);    
+      jQuery(obj).parents('.list_item').removeClass(conf.error_class).addClass(conf.success_class).removeClass(conf.loading_class);    
       jQuery("#"+replace).removeClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class).html(result); //remove classes & blank the html 
-      page_init();
+      accordion_alteration(obj);
+      page_init();      
     },
     "error":function(){
-      jQuery(obj).addClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class);    
+      jQuery(obj).parents('.list_item').addClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class);    
       jQuery("#"+replace).addClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class); //remove classes & blank the html 
       page_init();
     }
