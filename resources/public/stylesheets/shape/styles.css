@@ -446,9 +446,7 @@ form.waxform fieldset input.submit_field{
   float:left;
 }
 /*widgets*/
-form.widget-form{
-  margin:10px 0;
-}
+form.widget-form{margin:10px 0;}
 form.widget-form input.text_field{
   padding:3px;
   font-size:108%;
@@ -458,6 +456,18 @@ form.widget-form label{
   font-size:108%;
   padding:3px 0px;
 }
+/*search filter result listing*/
+.filter-form #search_for{width:160px;}
+#search-filter-results{
+  position:absolute;
+  width:165px;
+  padding:5px 5px 5px 0;
+  border:1px solid #cccccc;
+  background:white;
+  margin-left:57px;
+  margin-top:-17px;
+}
+
 /** MESSAGES **/
 .user_messages{
   -moz-border-radius:2px;
