@@ -14,4 +14,5 @@ class ShapeUser extends WaxModel {
 	public function fullname() {
 	  return $this->firstname." ".$this->surname;
 	}
+	public function title(){return $this->fullname ." (".$this->username.")";}
 }?>
