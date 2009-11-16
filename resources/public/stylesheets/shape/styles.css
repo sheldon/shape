@@ -528,6 +528,7 @@ form.split fieldset.split4{width:12%;}
   float:left;
   width:220px;
 }
+  #menu_container .ui-accordion-content{height:200px;overflow:auto;}
   #menu_container .icons{float:right;display:block;margin-right:8px;}  
   #menu_container .ui-accordion-content{padding:0}
     #menu_container li{padding:3px 4px 3px 6px;;}
@@ -543,6 +544,7 @@ form.split fieldset.split4{width:12%;}
     .ui-state-hover .icons a.active{
       background-image:url('/images/shape/ui/ui-icons_ff0084_256x240.png');
     }   
+    #menu-shape-dashboard-logout{margin-top:15px;}
     #menu-shape-dashboard{margin-bottom:15px;}
     #menu-shape-dashboard h3{font-weight:bold;}
     
