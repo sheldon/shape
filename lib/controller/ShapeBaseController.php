@@ -143,14 +143,11 @@ class ShapeBaseController extends WaxController {
   /**
    * Edit function, doesn't do much, just create the page object
    */
-  public function edit($id=false){
-    $primval = Request::param('id');
-    if(is_numeric($id)) $this->model = new $this->model_class($primval);
-    //if no idea is found; then show not found page
-    else if(!$primval) $this->use_view = "_not_found";
-    else $this->model = new $this->model_class($primval);
-    $this->wax_form = new WaxForm($this->model);
-        
+  public function edit($model = false){
+    if($model instanceof WaxModel) $this->model = $model;
+    else if(is_numeric($primval = Request::param('id'))) $this->model = new $this->model_class();
+    if($this->model) $this->wax_form = new WaxForm($this->model);
+    else $this->use_view = "_not_found";
   }
   
   public function delete(){}
@@ -159,9 +156,9 @@ class ShapeBaseController extends WaxController {
   /**
    * fetch everything for this model and spit it out
    */
-  public function _menu(){
-    $model= new $this->model_class;
-    if(!$this->shape_content = $model->order($this->model_order)->all()) $this->shape_content = array();
+  public function _menu($model = false){
+    if(!$model) $model = new $this->model_class;
+    $this->shape_models = $model->order($this->model_order)->all();
   }
   
   /**widget partials**/
