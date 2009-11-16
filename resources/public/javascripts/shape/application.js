@@ -2,7 +2,7 @@
 var menu_config = {"id":"main_menu", "h3_active_class":"active", "h3_hover_class":"ui-state-hover", "active":"ui-state-active"};
 var warnings_config = {"class_name":"delete"};
 var inline_load_config = {"class_name": "inline_load"};
-var filter_config = {"class_name": "filter_form", "timeout":800, "replace_id":"page", "keychange_class":"text_field", "loading_class":"loading", "error_class":"erorr","success_class":"success", "timer":false, "ajax_timeout":1200};
+var filter_config = {"class_name": "filter-form", "timeout":800, "replace_id":"page", "keychange_class":"text_field", "loading_class":"loading", "error_class":"erorr","success_class":"success", "timer":false, "ajax_timeout":1200};
 
 /**
  * function to trigger accordions - menu & page editing
@@ -20,20 +20,20 @@ function accordion(container, opts){
  * - checks form for certain attributes to override the presets
  * - filter_form is the form id/class
  */
-function filter(filter_form){
+function filters(filter_form){
+  if(typeof(filter_form) == "undefined") var filter_form = "."+filter_config.class_name;
   var timeout = filter_config.timeout;
-  if(jQuery(filter_form).attr('timeout').length) timeout = jQuery(filter_form).attr('timeout'); //overwrite the timeout with form attribute
+  if(jQuery(filter_form).attr('timeout')) timeout = jQuery(filter_form).attr('timeout'); //overwrite the timeout with form attribute
 
   //keypress monitoring
-  jQuery(filter_form).children(filter_config.keychange_class).keyup(function(e){    
+  jQuery(filter_form).find("."+filter_config.keychange_class).keyup(function(e){    
     //only run the filter on certain keys
     if(e.which == 8 || e.which == 32 || (65 <= e.which && e.which <= 65 + 25) || (97 <= e.which && e.which <= 97 + 25) || e.which == 160 || e.which == 127){
       jQuery(this).children(filter_config.keychange_class).removeClass(filter_config.success_class).removeClass(filter_config.error_class).addClass(filter_config.loading_class);
-      clearTimeout(filter_config.timer);
-      setTimeout("submit_filter('"+this+"')", timeout);
+      var obj =jQuery(this)[0].id;
+      filter_config.timer = setTimeout("submit_filter('#"+obj+"')", timeout);
     }
   });
-
   
   //dont allow form submit on filter forms
   jQuery(filter_form).submit(function(){
@@ -45,15 +45,19 @@ function filter(filter_form){
  * function to run the filter command
  */
 function submit_filter(form_obj){
-  var destination = jQuery(form_obj).attr('action'),
-      method = jQuery(form_obj).attr('method'),
+  var destination = jQuery(form_obj).parents('form').attr('action'),
+      method = jQuery(form_obj).parents('form').attr('method'),
       replace = "#"+filter_config.replace_id,
-      form_data = jQuery(form_obj).serialize();
-  if(jQuery(form_obj).attr('rel').length) replace = '#'+jQuery(form_obj).attr('rel'); //overwrite the replacement
+      form_data = jQuery(form_obj).parents('form').serialize();
+  
+  console.log(jQuery(form_obj).parents('form'));
+  clearTimeout(filter_config.timer);
+  
+  if(jQuery(form_obj).attr('rel')) replace = '#'+jQuery(form_obj).attr('rel'); //overwrite the replacement
   //remove classes etc
   jQuery(form_obj).children(filter_config.keychange_class).removeClass(filter_config.success_class).removeClass(filter_config.error_class).addClass(filter_config.loading_class);
   //the ajax call
-  jQuery.ajax(function(){
+  jQuery.ajax({
     "timeout": filter_config.ajax_timeout,
     "type":method,
     "url":destination,
@@ -61,9 +65,11 @@ function submit_filter(form_obj){
     "success":function(result){
       jQuery(form_obj).children(filter_config.keychange_class).addClass(filter_config.success_class).removeClass(filter_config.error_class).removeClass(filter_config.loading_class);
       jQuery(replace).html(result);
+      clearTimeout(filter_config.timer);
     },
     "error":function(){
       jQuery(form_obj).children(filter_config.keychange_class).removeClass(filter_config.success_class).addClass(filter_config.error_class).removeClass(filter_config.loading_class);
+      clearTimeout(filter_config.timer);
     }
   });
   
@@ -113,5 +119,5 @@ jQuery(document).ready(function(){
   main_menu();
   warnings();
   widgets();
-  
+  filters();
 });
