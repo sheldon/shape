@@ -457,10 +457,10 @@ form.widget-form label{
   padding:3px 0px;
 }
 /*search filter result listing*/
-.filter-form #search_for{width:160px;}
+.filter-form #search_for{width:190px;}
 #search-filter-results{
   position:absolute;
-  width:165px;
+  width:195px;
   padding:5px 5px 5px 0;
   border:1px solid #cccccc;
   background:white;
