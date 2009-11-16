@@ -14,4 +14,7 @@ class ShapeFile extends WaxModel {
     
 		$this->define("pages", "ForeignKey", array("target_model"=>"ShapePage"));
   }
-}?>
+  
+  public function title(){return $this->filename;}
+}
+?>
