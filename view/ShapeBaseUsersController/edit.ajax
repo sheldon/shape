@@ -25,6 +25,7 @@
             <li><?=$wax_form->firstname->render()?></li>
             <li><?=$wax_form->surname->render()?></li>
             <li><?=$wax_form->email->render()?></li>
+            <li class="submit"><input type="submit" class="input_field submit_field" value="update"/></li>
           </ol>        
         </fieldset>
       </form>
