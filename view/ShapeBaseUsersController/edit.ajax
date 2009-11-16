@@ -18,9 +18,15 @@
   <div class='ui-widget <?=str_replace("/", "-",$controller)?> widget clearfix large-widget'>
     <h3 class='widget-title ui-widget-header ui-helper-clearfix ui-corner-all ui-state-default'>User Information</h3>
     <div class="widget-content">
-      <form action="/<?=$controller?>/edit/<?=$model->primval?>" method="post" name="wax_form" class="waxform inline-submit">
+      <form action="/<?=$controller?>/edit/<?=$model->primval?>" method="post" name="wax_form" class="widget-form edit-form inline-submit">
         <fieldset>
-    
+          <ol class='clearfix'>
+            <li><?=$wax_form->username->render()?></li>          
+            <li><?=$wax_form->firstname->render()?></li>
+            <li><?=$wax_form->surname->render()?></li>
+            <li><?=$wax_form->email->render()?></li>
+            <li class="submit"><input type="submit" class="input_field submit_field" value="update"/></li>
+          </ol>        
         </fieldset>
       </form>
     </div>
