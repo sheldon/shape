@@ -33,9 +33,16 @@ function filters(filter_form){
   if(jQuery(filter_form).attr('timeout')) timeout = jQuery(filter_form).attr('timeout'); //overwrite the timeout with form attribute
 
   //keypress monitoring
-  jQuery(filter_form).find("."+filter_config.keychange_class).keyup(function(e){    
-    //only run the filter on certain keys
-    if(e.which == 8 || e.which == 32 || (65 <= e.which && e.which <= 65 + 25) || (97 <= e.which && e.which <= 97 + 25) || e.which == 160 || e.which == 127){
+  jQuery(filter_form).find("."+filter_config.keychange_class).keyup(function(e){ 
+    //clear timeout
+    clearTimeout(filter_config.timer);   
+    //if short then clear
+    if(jQuery(this).val().length < 1){
+      var replace = "#"+filter_config.replace_id;
+      if(jQuery(filter_form).attr('rel')) replace = "#"+jQuery(filter_form).attr('rel');
+      if(jQuery(filter_form).attr('show_and_hide')) jQuery(replace).hide();
+    //only run the filter on certain keys  
+    }else if(e.which == 8 || e.which == 32 || (65 <= e.which && e.which <= 65 + 25) || (97 <= e.which && e.which <= 97 + 25) || e.which == 160 || e.which == 127){
       jQuery(this).children(filter_config.keychange_class).removeClass(filter_config.success_class).removeClass(filter_config.error_class).addClass(filter_config.loading_class);
       var obj =jQuery(this);
       var filter_func = function(){submit_filter(obj); };
@@ -61,8 +68,6 @@ function submit_filter(filter_box){
       replace = "#"+filter_config.replace_id,
       form_data = jQuery(filter_box).parents('form').serialize(),
       show_hide = jQuery(filter_box).parents('form').attr('show_and_hide');
-  //clear timeout
-  clearTimeout(filter_config.timer);
   
   if(jQuery(filter_box).parents('form').attr('rel')) replace = '#'+jQuery(filter_box).parents('form').attr('rel'); //overwrite the replacement
   //remove classes
@@ -74,17 +79,17 @@ function submit_filter(filter_box){
     "url":destination,
     "data": form_data,
     "success":function(result){
+      clearTimeout(filter_config.timer);
       jQuery(filter_box).addClass(filter_config.success_class).removeClass(filter_config.error_class).removeClass(filter_config.loading_class);
       if(show_hide) jQuery(replace).show();
       jQuery(replace).html(result);
-      page_init();
-      clearTimeout(filter_config.timer);
+      page_init();      
     },
     "error":function(){
+      clearTimeout(filter_config.timer);
       jQuery(filter_box).removeClass(filter_config.success_class).addClass(filter_config.error_class).removeClass(filter_config.loading_class);
       if(show_hide) jQuery(replace).hide();
       page_init();
-      clearTimeout(filter_config.timer);
     }
   });
   
@@ -101,7 +106,8 @@ function inline_load(loader){
   var conf = inline_load_config;
   if(typeof(loader) == "undefined") var loader = conf.class_name;
   jQuery("."+loader).click(function(){
-    var destination = jQuery(this).attr('href')+".ajax",
+    var obj=this,
+        destination = jQuery(this).attr('href')+".ajax",
         method = "post"
         replace = inline_load_config.replace_id;
     if(jQuery(this).attr('method')) method = jQuery(this).attr('method');
@@ -115,6 +121,7 @@ function inline_load(loader){
       "type":method,
       "url":destination,
       "success":function(result){
+        document.title = obj.title;
         jQuery(this).removeClass(conf.error_class).addClass(conf.success_class).removeClass(conf.loading_class);    
         jQuery("#"+replace).removeClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class).html(result); //remove classes & blank the html 
         page_init();
