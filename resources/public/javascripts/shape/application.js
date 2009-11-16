@@ -35,7 +35,10 @@ function filters(filter_form){
       filter_config.timer = setTimeout(filter_func, timeout);
     }
   });
-  
+  //on blur
+  jQuery(filter_form).find("."+filter_config.keychange_class).blur(function(){
+    
+  });
   //dont allow form submit on filter forms
   jQuery(filter_form).submit(function(){
     return false;
