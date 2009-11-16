@@ -3,6 +3,7 @@ var menu_config = {"id":"main_menu", "h3_active_class":"active", "h3_hover_class
 var warnings_config = {"class_name":"delete"};
 var inline_load_config = {"class_name": "inline-load", "replace_id":"page", "loading_class":"loading-inline-load", "error_class":"error-inline-load", "success_class":"success-inline-load", "ajax_timeout":1200};
 var filter_config = {"class_name": "filter-form", "timeout":800, "replace_id":"page", "keychange_class":"text_field", "loading_class":"loading-filter", "error_class":"erorr-filter","success_class":"success-filter", "timer":false, "ajax_timeout":1200};
+var pages_tree_config = {"source":"/shape/pages/_menu.ajax","root_id":"menu-shape-pages-list"};
 
 /**
  * function to trigger accordions - menu & page editing
@@ -211,7 +212,31 @@ function widgets(){
  */
 function page_init(){
   
+}
+
+function load_children_pages(parent_id, injection_point){
+  var conf = inline_load_config;
+  
+  jQuery.ajax({
+    "timeout":conf.ajax_timeout,
+    "type":"post",
+    "url":pages_tree_config.source,
+    "data":{"parent_id":parent_id},
+    "success":function(result){
+      injection_point.after(result);
+    },
+    "error":function(){
+      
+    }
+  });
 };
+
+function page_tree(){
+  jQuery("#"+pages_tree_config.root_id).find(".show-children").click(function(){
+    load_children_pages(jQuery(this).attr("rel"),jQuery(this));
+    return false;
+  });
+}
 
 /** initialise everything **/
 jQuery(document).ready(function(){  
@@ -220,6 +245,7 @@ jQuery(document).ready(function(){
   warnings();
   widgets();
   filters();
+  page_tree();
   //nuts function that checks current address bar on page load to see if it can recall that page
   check_address_bar_for_page_load(); 
   inline_load();
