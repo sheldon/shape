@@ -184,7 +184,7 @@ function main_menu(){
   if(acc_id == 'menu-shape-dashboard') jQuery('#menu-shape-dashboard h3').addClass(menu_config.active);
   
   //hover effects on list items
-  jQuery("#"+menu_config.id+' ul.shape_listing li, #menu-shape-dashboard h3').hover(
+  jQuery("#"+menu_config.id+' ul.shape_listing li, #menu-shape-dashboard h3, #menu-shape-dashboard-logout h3').hover(
     function(){jQuery(this).addClass(menu_config.h3_hover_class);},
     function(){jQuery(this).removeClass(menu_config.h3_hover_class);}
   );
