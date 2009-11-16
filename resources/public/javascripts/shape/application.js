@@ -101,6 +101,7 @@ function submit_filter(filter_box){
  *  href - location to get data from (.ajax will be appended)
  *  method - to force switch from post to get
  *  rel - override what div to replace the content with  
+ *  title - this will replace the page title on successful load
  */
 function inline_load(loader){
   var conf = inline_load_config;
@@ -122,6 +123,8 @@ function inline_load(loader){
       "url":destination,
       "success":function(result){
         document.title = obj.title;
+        if(window.location.toString().indexOf('#')>0) window.location = window.location.toString().substring(0, window.location.toString().indexOf('#')) + "#"+destination;
+        else window.location = window.location.toString()+"#"+destination;
         jQuery(this).removeClass(conf.error_class).addClass(conf.success_class).removeClass(conf.loading_class);    
         jQuery("#"+replace).removeClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class).html(result); //remove classes & blank the html 
         page_init();
