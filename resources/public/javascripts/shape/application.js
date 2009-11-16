@@ -108,36 +108,58 @@ function inline_load(loader){
   var conf = inline_load_config;
   if(typeof(loader) == "undefined") var loader = conf.class_name;
   jQuery("."+loader).click(function(){
-    var obj=this,
-        destination = jQuery(this).attr('href')+".ajax",
-        method = "post"
-        replace = inline_load_config.replace_id;
-    if(jQuery(this).attr('method')) method = jQuery(this).attr('method');
-    if(jQuery(this).attr('rel')) replace = jQuery(this).attr('rel');
-    
-    jQuery(this).removeClass(conf.error_class).removeClass(conf.success_class).addClass(conf.loading_class);    
-    jQuery("#"+replace).removeClass(conf.error_class).removeClass(conf.success_class).addClass(conf.loading_class).html(''); //remove classes & blank the html
-    
-    jQuery.ajax({
-      "timeout":inline_load_config.ajax_timeout,
-      "type":method,
-      "url":destination,
-      "success":function(result){
-        document.title = obj.title;
-        if(window.location.toString().indexOf('#')>0) window.location = window.location.toString().substring(0, window.location.toString().indexOf('#')) + "#"+destination;
-        else window.location = window.location.toString()+"#"+destination;
-        jQuery(this).removeClass(conf.error_class).addClass(conf.success_class).removeClass(conf.loading_class);    
-        jQuery("#"+replace).removeClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class).html(result); //remove classes & blank the html 
-        page_init();
-      },
-      "error":function(){
-        jQuery(this).addClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class);    
-        jQuery("#"+replace).addClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class); //remove classes & blank the html 
-        page_init();
-      }
-    });
+    load_page(this);
     return false;
   });
+};
+/**
+ * This handles the loading of the page from the a tag thats been clicked
+ */
+function load_page(obj){
+  var conf = inline_load_config,
+      destination = jQuery(obj).attr('href')+".ajax",
+      method = "post"
+      replace = conf.replace_id;
+  if(jQuery(obj).attr('method')) method = jQuery(obj).attr('method');
+  if(jQuery(obj).attr('rel')) replace = jQuery(obj).attr('rel');
+  
+  jQuery(obj).removeClass(conf.error_class).removeClass(conf.success_class).addClass(conf.loading_class);    
+  jQuery("#"+replace).removeClass(conf.error_class).removeClass(conf.success_class).addClass(conf.loading_class).html(''); //remove classes & blank the html
+  
+  jQuery.ajax({
+    "timeout":conf.ajax_timeout,
+    "type":method,
+    "url":destination,
+    "success":function(result){
+      document.title = obj.title;
+      if(window.location.toString().indexOf('#')>0) window.location = window.location.toString().substring(0, window.location.toString().indexOf('#')) + "#"+destination;
+      else window.location = window.location.toString()+"#"+destination;
+      jQuery(obj).removeClass(conf.error_class).addClass(conf.success_class).removeClass(conf.loading_class);    
+      jQuery("#"+replace).removeClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class).html(result); //remove classes & blank the html 
+      page_init();
+    },
+    "error":function(){
+      jQuery(obj).addClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class);    
+      jQuery("#"+replace).addClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class); //remove classes & blank the html 
+      page_init();
+    }
+  });
+};
+/**
+ * Function checks the address bar of the page and looks for the 
+ * # mark, if anything is after this mark is a url then tries to
+ * load that page
+ */
+function check_address_bar_for_page_load(){
+  var page_url = window.location.toString(), pos = page_url.indexOf('#'), load="";
+  if(pos>0){
+    var sub_url = page_url.substring(pos).replace("#", "");
+    if(sub_url.indexOf("shape")>0) load = sub_url.replace(".ajax", "");
+    if(load){
+      load_page(jQuery('a[href='+load+']')[0]);      
+    }
+  }
+  
 }
 
 /**
@@ -190,6 +212,8 @@ jQuery(document).ready(function(){
   warnings();
   widgets();
   filters();
+  //nuts function that checks current address bar on page load to see if it can recall that page
+  check_address_bar_for_page_load(); 
   inline_load();
   /* functions called from page init are effected by ajax calls; so this function is recalled in each ajax call */
   page_init();
