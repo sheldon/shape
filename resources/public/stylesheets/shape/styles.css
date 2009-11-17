@@ -546,17 +546,24 @@ form.split fieldset.split4{width:12%;}
   width:220px;
 }
   /*so you dont get a juddering effect on hover - as ui-state-hover adds a border*/
-  .list_item{
+  .list-hover{
     border-top:1px solid white;
     border-bottom:1px solid white;
   }
   #menu_container .ui-accordion-content{height:200px;overflow:auto;}
   #menu_container .icons{float:right;display:block;margin-right:8px;}  
   #menu_container .ui-accordion-content{padding:0}
-    #menu_container li{padding:3px 4px 3px 6px;;}
       #menu_container li a{padding:2px 5px 2px 20px;text-decoration:none;}
-      #menu_container li span.ui-icon{position:absolute;}      
+      #menu_container li span.ui-icon{position:absolute;}
+      #menu_container li span.list-hover{
+        display:block;
+        padding:3px 4px 3px 6px;
+        overflow:hidden;
+        height:1.2em;
+      }
       
+    #menu_container .shape_sub_listing{padding-left:5px;}
+    
     #menu_container .icons a{
       width:16px;
       padding:0;

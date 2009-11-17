@@ -232,7 +232,7 @@ function main_menu(){
   if(acc_id == 'menu-shape-dashboard') jQuery('#menu-shape-dashboard h3').addClass(menu_config.active);
   
   //hover effects on list items
-  jQuery("#"+menu_config.id+' ul.shape_listing li, #menu-shape-dashboard h3, #menu-shape-dashboard-logout h3').hover(
+  jQuery("#"+menu_config.id+' ul.shape_listing li span.list-hover, #menu-shape-dashboard h3, #menu-shape-dashboard-logout h3').hover(
     function(){jQuery(this).addClass(menu_config.h3_hover_class);},
     function(){jQuery(this).removeClass(menu_config.h3_hover_class);}
   );
@@ -261,9 +261,10 @@ function sub_tree_ajax_setup(root_selector){
       "success":function(result){
         clicked_tag.removeClass("show-children").unbind("click");
         if(result.length){
-          clicked_tag.after(result);
+          var list_item = clicked_tag.closest("li");
+          list_item.append(result);
           clicked_tag.click(function(){
-            clicked_tag.siblings("ul").toggle();
+            list_item.children("ul").slideToggle("normal");
             return false;
           });
           sub_tree_ajax_setup(clicked_tag.siblings("ul"));
