@@ -6,7 +6,7 @@
       <a href="/<?=$controller?>/edit/<?=$model->primval?>" class="ui-icon ui-icon-wrench edit inline-load" title="Editing - <?=$model->$string_field?>">&nbsp;</a>
       <a href="/<?=$controller?>/child/<?=$model->primval?>" class="ui-icon ui-icon-plusthick " title="Create Child for <?=$model->$string_field?>">&nbsp;</a>
     </span>    
-    <span class="ui-icon ui-icon-triangle-1-e">&nbsp;</span>      
+    <span class="ui-icon <?if($multi_level):?>ui-icon-triangle-1-e<?else:?>ui-icon-battery-0<?endif?>">&nbsp;</span>      
     <a href="/<?=$controller?>/edit/<?=$model->primval?>" title="Editing - <?=$model->title?>" class='<?=str_replace("/", "-", $controller)?>-list-item <?if($multi_level):?>show-children<?else:?>inline-load<?endif?>' rel="<?=$model->primval?>"><?=$model->$string_field?></a>
   </li>
   <?endforeach?>
