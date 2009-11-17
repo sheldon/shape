@@ -166,8 +166,23 @@ class ShapeBaseController extends WaxController {
     
     if($model instanceof WaxModel) $this->model = $model;
     else if(is_numeric($primval = Request::param('id'))) $this->model = new $this->model_class($primval);
-    if($this->model) $this->wax_form = new WaxForm($this->model);
-    else $this->use_view = "_not_found";
+    /**
+     * check for model posting and save data
+     */
+    if($this->model){      
+      $this->wax_form = new WaxForm($this->model);
+      if($this->model->is_posted()){
+        $this->model_posted = true;
+        if($saved = $this->wax_form->save()){
+          $this->model = $saved;
+          $this->model_saved = true;
+        }else $this->model_saved = false;        
+      }      
+      
+    }else{
+      $this->model_posted = $this->model_saved = false;
+      $this->use_view = "_not_found";
+    }
   }
   
   
