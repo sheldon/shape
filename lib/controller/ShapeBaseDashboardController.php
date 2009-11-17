@@ -23,7 +23,7 @@ class ShapeBaseDashboardController extends ShapeController {
         if($this->authenticate->verify($values['username'], $values['password'])){
           Session::add_message('Welcome Back '.$values['username']);
           $this->current_user = $this->authenticate->get_user();
-          if($redirect = Session::get('shape_redirect_to')) $this->redirect_to($redirect);
+          if($redirect = Session::get('shape-redirect-to')) $this->redirect_to($redirect);
           else $this->redirect_to($this->login_success);
         }else Session::add_error('Sorry, those details cannot be found, please try again.');
       }
@@ -33,7 +33,7 @@ class ShapeBaseDashboardController extends ShapeController {
    * logout function, clear the sessions etc
    */
   public function logout(){
-    Session::unset_var('shape_redirect_to');
+    Session::unset_var('shape-redirect-to');
     Session::add_message('You have been logged out.');
 		$this->authenticate->logout();		
 		$this->redirect_to($this->login_path);  	
