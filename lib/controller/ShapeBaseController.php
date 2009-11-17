@@ -117,7 +117,7 @@ class ShapeBaseController extends WaxController {
           if(str_replace("Base", "", $method->class) == $name || $method->class == "ShapeBaseController"){
             $this_method = new ReflectionMethod($controller, $method->name);
             //and the method is public then add it to the permissions array..
-        		if($this_method->isPublic() && !in_array($method->name, $this->excluded_from_permissions)) $permissions[$name][$method->name] = true;
+        		if($this_method->isPublic() && !in_array($method->name, $this->excluded_from_permissions)) $permissions[$name][$method->name] = 1;
           }
         }      
       }
