@@ -230,18 +230,19 @@ function main_menu(){
 
   //add active class for he dashboard
   if(acc_id == 'menu-shape-dashboard') jQuery('#menu-shape-dashboard h3').addClass(menu_config.active);
-  
+};
+
+function menu_hover_states(){
   //hover effects on list items
-  jQuery("#"+menu_config.id+' ul.shape_listing li span.list-hover, #menu-shape-dashboard h3, #menu-shape-dashboard-logout h3').hover(
+  jQuery("#"+menu_config.id+' ul.shape_listing li span.list-hover, #menu-shape-dashboard h3, #menu-shape-dashboard-logout h3').unbind("hover").hover(
     function(){jQuery(this).addClass(menu_config.h3_hover_class);},
     function(){jQuery(this).removeClass(menu_config.h3_hover_class);}
   );
-  jQuery("#"+menu_config.id+' ul.shape_listing li .icons a').hover(
+  jQuery("#"+menu_config.id+' ul.shape_listing li .icons a').unbind("hover").hover(
     function(){jQuery(this).addClass(menu_config.h3_active_class);},
     function(){jQuery(this).removeClass(menu_config.h3_active_class);}
   );
-
-};
+}
 /**
  * sub tree ajax loading:
  *  gets the id of the node from the rel attribute
@@ -301,6 +302,7 @@ function page_init(){
   filters();
   inline_load();
   ajax_forms();
+  menu_hover_states();
 }
 
 /** initialise everything **/
