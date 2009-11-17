@@ -42,5 +42,8 @@ class ShapeBaseDashboardController extends ShapeController {
   //blank out the menu function
   public function _menu(){}
 
+  
+  
+  public function _summary(){}
 
 }?>
