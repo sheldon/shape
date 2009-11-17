@@ -31,6 +31,8 @@ body{text-align:left;}
 .clearfix{display:block;}
 /* End hide from IE Mac */ 
 .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+strong{font-weight:bold;}
+em{font-style:italic;}
 /*
 * jQuery UI CSS Framework
 * Copyright (c) 2009 AUTHORS.txt (http://jqueryui.com/about)
@@ -463,9 +465,24 @@ form.edit-form label{
   width:20%;
   overflow:hidden;
 }
+form.edit-form span.error_message{
+  display:block;
+  margin-left:21%;
+  color:#FF0084;
+}
 form.edit-form input.text_field{
   display:block;
   width:72%;
+}
+/* saved & error general message box */
+.form-message{
+  padding:8px;
+  margin-bottom:15px;
+  border-width:0;
+}
+.form-message p span.ui-icon{
+  float:left;
+  margin-right:5px;
 }
 /*search filter result listing*/
 .filter-form #search_for{width:190px;}
