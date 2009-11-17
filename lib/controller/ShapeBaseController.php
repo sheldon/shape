@@ -64,6 +64,8 @@ class ShapeBaseController extends WaxController {
     $class = get_class($this);    
     //merge base permissions into extended ones
 	  $this->permissions = array_merge($this->base_permissions[$class],$this->permissions);
+	  if($route != $this->login_path) $this->permission_check();
+    
     $this->site_name = $_SERVER['HTTP_HOST'];
 	  /*
 	    although wax is flagging use_plugin as [DEPRECATION] it still uses it everywhere and doesnt use the plugins array
