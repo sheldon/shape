@@ -21,7 +21,7 @@ class ShapeBaseController extends WaxController {
   public $model_order;  //order
   public $shape_models; //WaxRecordSet of models
   public $model; // the working model
-  public $wax_form; //wax form for the model  
+  public $wax_form=false; //wax form for the model  
   public $filters = array(); //columns to filter on
   public $string_field = "title"; //field used in list
   public $multi_level = false; //this will trigger fetching of multi level nav - mainly designed for the pages system
