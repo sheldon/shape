@@ -2,9 +2,9 @@
 var menu_config = {"id":"main_menu", "h3_active_class":"active", "h3_hover_class":"ui-state-hover", "active":"ui-state-active"};
 var warnings_config = {"class_name":"delete"};
 var inline_load_config = {"class_name": "inline-load", "replace_id":"page", "loading_class":"loading-inline-load", "error_class":"error-inline-load", "success_class":"ui-state-error", "ajax_timeout":1200};
+var form_config = {"class_name": "inline-submit", "replace_id":"page", "loading_class":"loading-inline-submit", "error_class":"error-inline-submit", "success_class":"ui-state-active", "ajax_timeout":1200};
 var filter_config = {"class_name": "filter-form", "timeout":800, "replace_id":"page", "keychange_class":"text_field", "loading_class":"loading-filter", "error_class":"erorr-filter","success_class":"success-filter", "timer":false, "ajax_timeout":1200};
 var pages_tree_config = {"source":"/shape/pages/_menu.ajax","root_id":"menu-shape-pages-list"};
-
 /**
  * function to trigger accordions - menu & page editing
  **/
@@ -161,6 +161,49 @@ function load_page(obj){
   });
 };
 /**
+ * FUNCTIONS FOR AJAX SUBMITED FORMS
+ * form attributes
+ *  action - where the form submits to (with a .ajax extension)
+ *  method - post or get
+ *  replace - the id of what to replace
+ * form fields are serialised and passed along
+ */
+function ajax_forms(form){
+  if(typeof(form) == "undefined") var form = "."+form_config.class_name;
+  jQuery(form).unbind("submit");
+  jQuery(form).submit(function(){
+    submit_form(this);
+    return false;
+  });  
+};
+/**
+ * handles the submitting of the form
+ */
+function submit_form(obj){
+  var destination = jQuery(obj).attr('action')+".ajax", //all ajax calls to use the .ajax result
+      method = jQuery(obj).attr('method'),
+      replace = "#"+form_config.replace_id,
+      form_data = jQuery(obj).serialize();
+  
+  if(jQuery(obj).attr('replace')) replace = '#'+jQuery(obj).attr('replace');
+  jQuery.ajax({
+    "timeout": form_config.ajax_timeout,
+    "type":method,
+    "url":destination,
+    "data": form_data,
+    "success":function(result){
+      jQuery(obj).addClass(form_config.success_class).removeClass(form_config.error_class).removeClass(form_config.loading_class);
+      jQuery(replace).html(result);
+      page_init();      
+    },
+    "error":function(){
+      jQuery(obj).removeClass(form_config.success_class).addClass(form_config.error_class).removeClass(form_config.loading_class);
+      page_init();
+    }
+  });
+};
+
+/**
  * Function checks the address bar of the page and looks for the 
  * # mark, if anything is after this mark is a url then tries to
  * load that page
@@ -173,9 +216,8 @@ function check_address_bar_for_page_load(){
     if(load){
       load_page(jQuery('a[href='+load+']')[0]);      
     }
-  }
-  
-}
+  }  
+};
 
 /**
  * Everything for the main menu runs from this function
@@ -217,7 +259,12 @@ function widgets(){
  * Page init function - handles all ajax effect js
  */
 function page_init(){
+  //inline loading
   inline_load();
+  //filters
+  filters();
+  //ajax form submits
+  ajax_forms();
 }
 
 function load_children_pages(parent_id, injection_point){
@@ -250,7 +297,6 @@ jQuery(document).ready(function(){
   main_menu();
   warnings();
   widgets();
-  filters();
   page_tree();
   //nuts function that checks current address bar on page load to see if it can recall that page
   check_address_bar_for_page_load(); 
