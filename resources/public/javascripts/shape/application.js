@@ -272,7 +272,7 @@ function sub_tree_ajax_setup(root_selector){
         }
         clicked_tag.click(function(){
           clicked_tag.toggleClass("ui-icon-triangle-1-e").toggleClass("ui-icon-triangle-1-s");
-          list_item.children("ul").slideToggle("normal");
+          list_item.children("ul").slideToggle("fast");
           return false;
         });
       },
