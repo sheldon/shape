@@ -2,12 +2,10 @@
 
 <div class='small-widget-column clearfix'>
   
-  <div class='ui-widget <?=str_replace("/", "-",$controller)?> widget clearfix'>
-    <h3 class='widget-title ui-widget-header ui-helper-clearfix ui-corner-all ui-state-default'>Reset Password</h3>
-  </div>  
-
-  <div class='ui-widget <?=str_replace("/", "-",$controller)?> widget clearfix'>
-    <h3 class='widget-title ui-widget-header ui-helper-clearfix ui-corner-all ui-state-default'>Recent Activity</h3>
+  <div class='ui-widget <?=str_replace("/", "-",$controller)?> widget clearfix' id="<?=str_replace("/", "-",$controller)?>-reset-password-<?=$model->primval?>">
+    <?=partial("_reset_password", $this, $use_format)?>
+  </div>
+  
   </div>
   
 </div>
