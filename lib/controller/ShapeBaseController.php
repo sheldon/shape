@@ -147,12 +147,21 @@ class ShapeBaseController extends WaxController {
     else return false;
   }
   /**
-   * Edit function, doesn't do much, just create the page object
+   * Edit function, doesn't do much, just call the edit function
+   *
+   * As the none js version of the page posts to this then
+   * it just needs to call the _edit function, which checks
    */
   public function edit($model = false){
     $this->_edit($model);
   }
-  /*partial function, just checks post */
+  /**
+   * As the form reference to the edit partial passes in $this,
+   * this function should never get called by the partial.
+   * 
+   * Called via an ajax command, this will check the post data
+   * and try to save the model
+   */
   public function _edit($model=false){
     
     if($model instanceof WaxModel) $this->model = $model;
