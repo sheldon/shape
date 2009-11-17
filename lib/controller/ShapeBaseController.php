@@ -83,6 +83,33 @@ class ShapeBaseController extends WaxController {
    * loop over the controllers and find all public methods
    * - this operation could be heavy so cache it
    */
+  protected function base_permissions(){
+    $class_name = get_class($this);
+    $permissions=array();
+    $cache = new WaxCacheFile(CACHE_DIR."shape", "forever", 'cache', CACHE_DIR."shape/base-permissions-".$class_name.".cache");
+    if($found = $cache->get()) $permissions = unserialize($found);
+    else{
+      //loop over the controllers that have been found
+      foreach($this->controller_list as $name=>$controller){
+        //make a new reflection class to inspect its methods
+        $obj = new ReflectionClass($controller);
+        //make a controller so we can later check the methods status - public / protected etc
+        $controller = new $controller(false);
+        //loop over all methods
+        foreach($obj->getMethods() as $method){
+          //if the class name this method is from matches the controllers name or the base controller
+          if(str_replace("Base", "", $method->class) == $name || $method->class == "ShapeBaseController"){
+            $this_method = new ReflectionMethod($controller, $method->name);
+            //and the method is public then add it to the permissions array..
+        		if($this_method->isPublic() && !in_array($method->name, $this->excluded_from_permissions)) $permissions[$name][$method->name] = true;
+          }
+        }      
+      }
+      $cache->set(serialize($permissions));
+    }
+    return $permissions;
+  }
+  
   
   /** GENERIC ACTIONS **/
   public function index(){}
