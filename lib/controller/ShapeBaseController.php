@@ -25,6 +25,8 @@ class ShapeBaseController extends WaxController {
   public $filters = array(); //columns to filter on
   public $string_field = "title"; //field used in list
   public $multi_level = false; //this will trigger fetching of multi level nav - mainly designed for the pages system
+  public $model_posted=false;
+  public $model_saved=false;
   
   public $site_name; //$_SERVER['http_host']
   public $widgets = array("shape/pages/_search", "shape/statistics/_analytics", "shape/dashboard/_summary", "shape/pages/_recentpages"); //default widget
