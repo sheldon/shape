@@ -270,7 +270,7 @@ function sub_tree_ajax_setup(root_selector){
             list_item.children("ul").slideToggle("normal");
             return false;
           });
-          sub_tree_ajax_setup(clicked_tag.siblings("ul"));
+          sub_tree_ajax_setup(list_item.children("ul"));
           page_init();
         }else{
           clicked_tag.addClass(inline_load_config.class_name);
