@@ -18,4 +18,10 @@ class ShapeBasePagesController extends ShapeController {
     
     parent::_menu($model);
   }
+  
+  public function create($model = false){
+    if($this->use_format == "ajax"){
+      $this->new_model = $this->new_model();
+    }else parent::create($model);
+  }
 }?>

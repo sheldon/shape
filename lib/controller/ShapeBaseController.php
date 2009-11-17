@@ -128,7 +128,14 @@ class ShapeBaseController extends WaxController {
    * result shows edit pages etc
    *
    */
-  public function create(){}
+  public function create($model = false){
+    if($model instanceof WaxModel) $new_model = $model;
+    else $new_model = $this->new_model();
+    
+    $this->use_view = "edit";
+    if($new_model)
+      $this->edit($new_model);
+  }
   
   /**
    * create an empty skel object, save it and return
