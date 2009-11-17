@@ -174,11 +174,8 @@ class ShapeBaseController extends WaxController {
     $this->shape_models = $model->order($this->model_order)->all();
   }
   
-  /** WIDGET PARTIALS **/
-  public function _search(){}
-  public function _summary(){}
-  public function _analytics(){}
-  public function _recentpages(){}
+  
+  
   
   
   /** protected function to check header & layout type **/
