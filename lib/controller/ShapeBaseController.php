@@ -7,6 +7,7 @@ class ShapeBaseController extends WaxController {
   public $use_layout = "admin";
   public $use_plugin = "shape"; //this should not be needed - see comment below regarding [DEPRECATION]
   
+  public $controller_list=array();
   public $user_model = "ShapeUser"; //user model
   public $user_table = "shape_user"; //user table
   public $login_path = "/shape/login"; //path to login
