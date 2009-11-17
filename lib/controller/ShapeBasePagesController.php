@@ -24,4 +24,7 @@ class ShapeBasePagesController extends ShapeController {
       $this->new_model = $this->new_model();
     }else parent::create($model);
   }
+  
+  public function _recentpages(){}
+  public function _search(){}
 }?>

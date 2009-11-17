@@ -7,15 +7,18 @@ class ShapeBaseController extends WaxController {
   public $use_layout = "admin";
   public $use_plugin = "shape"; //this should not be needed - see comment below regarding [DEPRECATION]
   
+  public $controller_list=array();
+  
   public $user_model = "ShapeUser"; //user model
   public $user_table = "shape_user"; //user table
-  public $login_path = "/shape/login"; //path to login
+  public $login_path = "/shape/dashboard/login"; //path to login
   public $login_success = "/shape/dashboard"; //default place to go to
   public $current_user = false; //logged in user object, this set to false means an unauthenticated request and it should be checked on every request
   public $authenticate=false;
   
-  public $base_permissions = array("enabled","menu","create","view","delete","edit"); //base permissions to be merged with extended ones
+  public $base_permissions = array(); //base permissions to be merged with extended ones
   public $permissions = array(); //stub for extendable permissions, can be added to extended controllers easily
+  public $excluded_from_permissions = array('__construct', 'controller_global');
   
   public $model_class; //class name
   public $model_order;  //order
@@ -46,14 +49,20 @@ class ShapeBaseController extends WaxController {
 	/** 
 	* Deferred constructor, so that Shape Controllers can be constructed without any code running if necessary
 	**/
-	public function shape_init() {
-    $route = rtrim($_SERVER['REQUEST_URI'], "/"); //remove the / at the end of any url    
-	  //merge base permissions into extended ones
-	  $this->permissions = array_unique(array_merge($this->base_permissions,$this->permissions));
+	protected function shape_init() {
+    $route = rtrim($_SERVER['REQUEST_URI'], "/"); //remove the / at the end of any url
+    //check user is logged in
 	  if(!$this->auth() && $route != $this->login_path){
-	    Session::set('shape_redirect_to', $route);
+	    Session::set('shape-redirect-to', $route);
 	    $this->redirect_to($this->login_path);
     }
+    //fetch all the registered controllers
+    if($controller_list = constant("CONTROLLER_LIST")) $this->controller_list = unserialize($controller_list);
+    
+    if($route != $this->login_path){
+      $this->permissions = $this->permissions();
+    }
+    
     $this->site_name = $_SERVER['HTTP_HOST'];
 	  /*
 	    although wax is flagging use_plugin as [DEPRECATION] it still uses it everywhere and doesnt use the plugins array
@@ -61,63 +70,73 @@ class ShapeBaseController extends WaxController {
 	    
 	    $this->add_plugin("shape");
 	  */
+    
+    
 	}
   /**
    * auth process. first check if a user exists. then check if they are allowed to do what they're trying to.
    *
    * @return void
    */
-  public function auth(){
+  protected function auth(){
     if($this->current_user) return true;
 		$this->authenticate = new WaxAuthDb(array("encrypt"=>true, "db_table"=>$this->user_table, "session_key"=>"shape_user_cookie"));
 		if($this->current_user = $this->authenticate->get_user()) return true;
 		return false;
   }
-  
   /**
-   * login function
+   * find the permissions for the controller working on
+   * - take the base permissions; which are all allowed (value 1)
+   * - merge with extra permissions for other actions
+   * - merge that with user based permissions, which would override the values - letting you black list actions
    */
-  public function login(){
-    $user = new ShapeUser;
-    $this->login_form = new WaxForm($user);
-    /**
-     * form is posted so check the values
-     */
-    if($user->is_posted() && ($values = Request::param('shape_user')) ){
-      /**
-       * Only check the database if both values are set - reduce lookups
-       * Inform users what they are missing
-       * If all good then redirect to where they where trying to get to, or the default
-       */
-      if(!$values['username'] && !$values['password']) Session::add_error('Please enter username and password');
-      elseif(!$values['username'] && $values['password']) Session::add_error('Please enter a username');
-      elseif($values['username'] && !$values['password']) Session::add_error('Please enter a password');
-      else{
-        if($this->authenticate->verify($values['username'], $values['password'])){
-          Session::add_message('Welcome Back '.$values['username']);
-          $this->current_user = $this->authenticate->get_user();
-          if($redirect = Session::get('shape_redirect_to')) $this->redirect_to($redirect);
-          else $this->redirect_to($this->login_success);
-        }else Session::add_error('Sorry, those details cannot be found, please try again.');
-      }
-    }
+  protected function permissions(){
+    //get the base permissions for everything
+    $this->base_permissions = $this->base_permissions();  
+    //class name
+    $class = get_class($this);
+    //cast to an array in case empty
+    $user_allowed_modules = (array) $this->current_user->permissions($class);
+    return array_merge($this->base_permissions[$class], $this->permissions, $user_allowed_modules);    
   }
   /**
-   * logout function, clear the sessions etc
+   * loop over the controllers and find all public methods
+   * - this operation could be heavy so cache it
    */
-  public function logout(){
-    Session::unset_var('shape_redirect_to');
-    Session::add_message('You have been logged out.');
-		$this->authenticate->logout();		
-		$this->redirect_to($this->login_path);  	
-	}
+  protected function base_permissions(){
+    $class_name = get_class($this);
+    $permissions=array();
+    $cache = new WaxCacheFile(CACHE_DIR."shape", "forever", 'cache', CACHE_DIR."shape/base-permissions-".$class_name.".cache");
+    if($found = $cache->get()) $permissions = unserialize($found);
+    else{
+      //loop over the controllers that have been found
+      foreach($this->controller_list as $name=>$controller){
+        //make a new reflection class to inspect its methods
+        $obj = new ReflectionClass($controller);
+        //make a controller so we can later check the methods status - public / protected etc
+        $controller = new $controller(false);
+        //loop over all methods
+        foreach($obj->getMethods() as $method){
+          //if the class name this method is from matches the controllers name or the base controller
+          if(str_replace("Base", "", $method->class) == $name || $method->class == "ShapeBaseController"){
+            $this_method = new ReflectionMethod($controller, $method->name);
+            //and the method is public then add it to the permissions array..
+        		if($this_method->isPublic() && !in_array($method->name, $this->excluded_from_permissions)) $permissions[$name][$method->name] = 1;
+          }
+        }      
+      }
+      $cache->set(serialize($permissions));
+    }
+    return $permissions;
+  }
+  
   
   /** GENERIC ACTIONS **/
   public function index(){}
   /**
    * remove any layout / view / partial cache files
    */
-  public function clear_cache(){
+  protected function clear_cache(){
     foreach(glob(CACHE_DIR."layout/*") as $file) @unlink($file);
     foreach(glob(CACHE_DIR."view/*") as $file) @unlink($file);
     foreach(glob(CACHE_DIR."partial/*") as $file) @unlink($file);
@@ -206,11 +225,8 @@ class ShapeBaseController extends WaxController {
     $this->shape_models = $model->order($this->model_order)->all();
   }
   
-  /** WIDGET PARTIALS **/
-  public function _search(){}
-  public function _summary(){}
-  public function _analytics(){}
-  public function _recentpages(){}
+  
+  
   
   
   /** protected function to check header & layout type **/

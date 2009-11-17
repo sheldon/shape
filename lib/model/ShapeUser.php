@@ -8,11 +8,18 @@ class ShapeUser extends WaxModel {
     $this->define("surname", "CharField");
     
     $this->define("pages", "ManyToManyField", array("target_model"=>"ShapePage"));
-    //$this->define("permissions", "HasManyField", array("target_model"=>"ShapePermission"));
+    $this->define("permissions", "HasManyField", array("target_model"=>"ShapePermission"));
   }
   
 	public function fullname() {
 	  return $this->firstname." ".$this->surname;
 	}
+	
+	public function permissions($class){
+    $modules = array();
+    foreach($this->permissions as $perm) $modules[$perm->classname][$perm->action] = $perm->allowed;
+    return $modules[$class];
+	}
+	
 	public function title(){return $this->fullname ." (".$this->username.")";}
 }?>
