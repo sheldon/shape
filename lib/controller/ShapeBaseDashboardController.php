@@ -1,6 +1,8 @@
 <?php
 class ShapeBaseDashboardController extends ShapeController {
   
+  public $excluded_from_permissions = array('__construct', 'controller_global', 'create', 'edit', '_edit', 'delete');
+  
   /**
    * login function
    */
