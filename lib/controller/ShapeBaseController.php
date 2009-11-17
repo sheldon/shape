@@ -56,6 +56,8 @@ class ShapeBaseController extends WaxController {
 	    Session::set('shape-redirect-to', $route);
 	    $this->redirect_to($this->login_path);
     }
+    //fetch all the registered controllers
+    if($controller_list = constant("CONTROLLER_LIST")) $this->controller_list = unserialize($controller_list);
     $this->site_name = $_SERVER['HTTP_HOST'];
 	  /*
 	    although wax is flagging use_plugin as [DEPRECATION] it still uses it everywhere and doesnt use the plugins array
@@ -63,7 +65,7 @@ class ShapeBaseController extends WaxController {
 	    
 	    $this->add_plugin("shape");
 	  */
-    if($controller_list = constant("CONTROLLER_LIST")) $this->controller_list = unserialize($controller_list);
+    
     
 	}
   /**
