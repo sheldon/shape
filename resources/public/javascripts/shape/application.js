@@ -147,7 +147,7 @@ function load_page(obj){
       document.title = obj.title;
       if(window.location.toString().indexOf('#')>0) window.location = window.location.toString().substring(0, window.location.toString().indexOf('#')) + "#"+destination;
       else window.location = window.location.toString()+"#"+destination;
-      jQuery(obj).parents('.list_item').removeClass(conf.error_class).addClass(conf.success_class).removeClass(conf.loading_class);    
+      jQuery(obj).parent('.list_item').removeClass(conf.error_class).addClass(conf.success_class).removeClass(conf.loading_class);    
       jQuery("#"+replace).removeClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class).html(result); //remove classes & blank the html 
       accordion_alteration(obj);
       page_init();      
