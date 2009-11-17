@@ -3,8 +3,8 @@ var menu_config = {"id":"main_menu", "h3_active_class":"active", "h3_hover_class
 var warnings_config = {"class_name":"delete"};
 var inline_load_config = {"class_name": "inline-load", "replace_id":"page", "loading_class":"loading-inline-load", "error_class":"error-inline-load", "success_class":"ui-state-error", "ajax_timeout":1200};
 var form_config = {"class_name": "inline-submit", "replace_id":"page", "loading_class":"loading-inline-submit", "error_class":"error-inline-submit", "success_class":"ui-state-active", "ajax_timeout":1200};
-var filter_config = {"class_name": "filter-form", "timeout":800, "replace_id":"page", "keychange_class":"text_field", "loading_class":"loading-filter", "error_class":"erorr-filter","success_class":"success-filter", "timer":false, "ajax_timeout":1200};
-var ajax_tree_config = {"class_name":"show-children","source":"/shape/pages/_menu.ajax"};
+var filter_config = {"class_name": "filter-form", "timeout":800, "replace_id":"page", "keychange_class":"text_field", "loading_class":"loading-filter", "error_class":"error-filter","success_class":"success-filter", "timer":false, "ajax_timeout":1200};
+var ajax_tree_config = {"class_name":"show-children", "source":"/shape/pages/_menu.ajax", "loading_class":"loading-tree", "error_class":"error-tree", "success_class":"success-tree"};
 
 /**
  * function to trigger accordions - menu & page editing
@@ -255,13 +255,14 @@ function menu_hover_states(){
 function sub_tree_ajax_setup(root_selector){
   return root_selector.find("."+ajax_tree_config.class_name).click(function(){
     var clicked_tag = jQuery(this);
+    clicked_tag.addClass(ajax_tree_config.loading_class);
     jQuery.ajax({
       "timeout":inline_load_config.ajax_timeout,
       "type":"post",
       "url":ajax_tree_config.source,
       "data":{"parent_id":clicked_tag.attr("rel")},
       "success":function(result){
-        clicked_tag.removeClass("show-children").unbind("click");
+        clicked_tag.removeClass(ajax_tree_config.loading_class+" "+ajax_tree_config.class_name).addClass(ajax_tree_config.success_class).unbind("click");
         if(result.length){
           var list_item = clicked_tag.closest("li");
           list_item.append(result);
@@ -277,7 +278,7 @@ function sub_tree_ajax_setup(root_selector){
         }
       },
       "error":function(){
-        //not sure what to do on error, any ideas?
+        clicked_tag.removeClass(ajax_tree_config.loading_class).addClass(ajax_tree_config.error_class);
       }
     });
     return false;
