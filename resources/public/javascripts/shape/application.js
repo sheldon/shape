@@ -136,8 +136,8 @@ function load_page(obj){
   if(jQuery(obj).attr('method')) method = jQuery(obj).attr('method');
   if(jQuery(obj).attr('replace')) replace = jQuery(obj).attr('replace');
   
-  jQuery('#'+menu_config.id+" li").removeClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class);    
-  jQuery(obj).parents('.list_item').addClass(conf.loading_class);    
+  jQuery('#'+menu_config.id+" .list-hover").removeClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class);    
+  jQuery(obj).closest('.list-hover').addClass(conf.loading_class);    
   jQuery("#"+replace).removeClass(conf.error_class).removeClass(conf.success_class).addClass(conf.loading_class).html(''); //remove classes & blank the html
   
   jQuery.ajax({
