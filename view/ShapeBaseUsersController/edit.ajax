@@ -6,6 +6,8 @@
     <?=partial("_reset_password", $this, $use_format)?>
   </div>
   
+  <div class='ui-widget <?=str_replace("/", "-",$controller)?> widget clearfix' id="<?=str_replace("/", "-",$controller)?>-reset-password-<?=$model->primval?>">
+    <?=partial("_activity", $this, $use_format)?>
   </div>
   
 </div>
