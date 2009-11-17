@@ -161,8 +161,9 @@ class ShapeBaseController extends WaxController {
    */
   protected function new_model(){
     $model = new $this->model_class;
-     //find the required fields and give them default values
+    //find the required fields and give them default values
     foreach($model->columns as $name=>$values){
+      if($name == $model->primary_key || in_array($values[0],array("ForeignKey","HasManyField","ManyToManyField"))) continue;
       if($values[1]['unique']) $model->$name = time();
       elseif($values[1] && $values[1]['required'] && !$values[1]['target_model']) {
         if($values[0] == "FloatField" || $values[0] == "IntegerField" || $values[0] == "BooleanField") $model->$name = 0;
