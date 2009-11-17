@@ -563,7 +563,11 @@ form.split fieldset.split4{width:12%;}
         height:1.2em;
       }
       
-    #menu_container .shape_sub_listing{padding-left:5px;}
+      #menu_container li span.list-hover{padding-left:6px;}
+      #menu_container li li span.list-hover{padding-left:12px;}
+      #menu_container li li li span.list-hover{padding-left:18px;}
+      #menu_container li li li li span.list-hover{padding-left:24px;}
+      #menu_container li li li li li span.list-hover{padding-left:30px;}
     
     #menu_container .icons a{
       width:16px;
