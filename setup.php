@@ -27,10 +27,7 @@ else{
     if(is_readable($file)){
       $name = substr(basename($file),0,-4);
       $model = new $name(false);
-      if($model instanceOf ShapeBaseController){
-        $common_name = strtolower(str_ireplace("controller", "", str_ireplace(PLUGIN_NAME, "", $name)));
-        $found[$common_name] = $name; 
-      }
+      if($model instanceOf ShapeBaseController) $found[$name] = $name; 
     }  
   }
   $cache->set(serialize($found));
