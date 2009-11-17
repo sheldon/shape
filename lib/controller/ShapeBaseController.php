@@ -188,16 +188,18 @@ class ShapeBaseController extends WaxController {
   
   public function delete(){}
   
-  /** GENERIC PARTIALS **/
   /**
    * fetch everything for this model and spit it out
+   *
+   * Called via partial call without a template passed
+   * in & in the case of pages via ajax call
    */
   public function _menu($model = false){
     if(!$model) $model = new $this->model_class;
     $this->shape_models = $model->order($this->model_order)->all();
   }
   
-  /**widget partials**/
+  /** WIDGET PARTIALS **/
   public function _search(){}
   public function _summary(){}
   public function _analytics(){}
