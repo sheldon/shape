@@ -92,7 +92,7 @@ class ShapeBaseController extends WaxController {
   /**
    * remove any layout / view / partial cache files
    */
-  public function clear_cache(){
+  protected function clear_cache(){
     foreach(glob(CACHE_DIR."layout/*") as $file) @unlink($file);
     foreach(glob(CACHE_DIR."view/*") as $file) @unlink($file);
     foreach(glob(CACHE_DIR."partial/*") as $file) @unlink($file);
