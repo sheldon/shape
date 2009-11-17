@@ -298,7 +298,9 @@ function widgets(){
  * Page init function - handles all ajax effect js
  */
 function page_init(){
-  
+  filters();
+  inline_load();
+  ajax_forms();
 }
 
 /** initialise everything **/
@@ -306,12 +308,10 @@ jQuery(document).ready(function(){
   /* these all trigger once only on page load and should not be effected by any following ajax calls */
   main_menu();
   warnings();
-  widgets();
-  filters();
+  widgets();  
   sub_tree_ajax_setup(jQuery(document));
   //nuts function that checks current address bar on page load to see if it can recall that page
-  check_address_bar_for_page_load(); 
-  inline_load();
+  check_address_bar_for_page_load();   
   /* functions called from page init are effected by ajax calls; so this function is recalled in each ajax call */
   page_init();
 });
