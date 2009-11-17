@@ -270,8 +270,7 @@ function sub_tree_ajax_setup(root_selector){
           sub_tree_ajax_setup(clicked_tag.siblings("ul"));
         }else{
           clicked_tag.addClass(inline_load_config.class_name);
-          inline_load();
-          //load_page(clicked_tag);
+          load_page(clicked_tag);
         }
       },
       "error":function(){
