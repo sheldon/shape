@@ -75,10 +75,13 @@ class ShapeBaseController extends WaxController {
 		if($this->current_user = $this->authenticate->get_user()) return true;
 		return false;
   }
-  
   /**
-   * login function
+   * check permission
+   *
    */
+  protected function permission_check(){
+    $user_allowed_modules = $this->current_user->permissions($this->controller);
+    
   }
   /**
    * loop over the controllers and find all public methods
