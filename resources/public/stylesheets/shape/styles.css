@@ -528,6 +528,11 @@ form.split fieldset.split4{width:12%;}
   float:left;
   width:220px;
 }
+  /*so you dont get a juddering effect on hover - as ui-state-hover adds a border*/
+  .list_item{
+    border-top:1px solid white;
+    border-bottom:1px solid white;
+  }
   #menu_container .ui-accordion-content{height:200px;overflow:auto;}
   #menu_container .icons{float:right;display:block;margin-right:8px;}  
   #menu_container .ui-accordion-content{padding:0}
