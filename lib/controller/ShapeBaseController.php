@@ -62,6 +62,8 @@ class ShapeBaseController extends WaxController {
 	    
 	    $this->add_plugin("shape");
 	  */
+    if($controller_list = constant("CONTROLLER_LIST")) $this->controller_list = unserialize($controller_list);
+    
 	}
   /**
    * auth process. first check if a user exists. then check if they are allowed to do what they're trying to.
