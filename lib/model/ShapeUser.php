@@ -20,7 +20,7 @@ class ShapeUser extends WaxModel {
     $cache = new WaxCacheFile(CACHE_DIR."shape", 3600, 'cache', $path);
     $modules = array();
     if(!$found = $cache->valid()){
-      foreach($this->permissions as $perm) $modules[$perm->controller][$perm->action] = true;
+      foreach($this->permissions as $perm) $modules[$perm->controller][$perm->action] = $perm->allowed;
       $cache->set(serialize($modules));
     }else $modules = unserialize($found);
     return $modules;
