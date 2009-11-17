@@ -16,7 +16,7 @@ class ShapeBaseController extends WaxController {
   public $current_user = false; //logged in user object, this set to false means an unauthenticated request and it should be checked on every request
   public $authenticate=false;
   
-  public $base_permissions = array("enabled","create","view","delete","edit"); //base permissions to be merged with extended ones
+  public $base_permissions = array(); //base permissions to be merged with extended ones
   public $permissions = array(); //stub for extendable permissions, can be added to extended controllers easily
   
   public $model_class; //class name
