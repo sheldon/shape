@@ -50,8 +50,10 @@ class ShapeBaseController extends WaxController {
 	* Deferred constructor, so that Shape Controllers can be constructed without any code running if necessary
 	**/
 	protected function shape_init() {
+    $route = rtrim($_SERVER['REQUEST_URI'], "/"); //remove the / at the end of any url
+    //check user is logged in
 	  if(!$this->auth() && $route != $this->login_path){
-	    Session::set('shape_redirect_to', $route);
+	    Session::set('shape-redirect-to', $route);
 	    $this->redirect_to($this->login_path);
     }
     $this->site_name = $_SERVER['HTTP_HOST'];
