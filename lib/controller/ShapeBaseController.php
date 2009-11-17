@@ -144,11 +144,17 @@ class ShapeBaseController extends WaxController {
    * Edit function, doesn't do much, just create the page object
    */
   public function edit($model = false){
+    $this->_edit($model);
+  }
+  /*partial function, just checks post */
+  public function _edit($model=false){
+    
     if($model instanceof WaxModel) $this->model = $model;
     else if(is_numeric($primval = Request::param('id'))) $this->model = new $this->model_class($primval);
     if($this->model) $this->wax_form = new WaxForm($this->model);
     else $this->use_view = "_not_found";
   }
+  
   
   public function delete(){}
   
