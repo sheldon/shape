@@ -88,12 +88,19 @@ class ShapeBaseController extends WaxController {
 		return false;
   }
   /**
-   * check permission
-   *
+   * find the permissions for the controller working on
+   * - take the base permissions; which are all allowed (value 1)
+   * - merge with extra permissions for other actions
+   * - merge that with user based permissions, which would override the values - letting you black list actions
    */
-  protected function permission_check(){
-    $user_allowed_modules = $this->current_user->permissions($this->controller);
-    
+  protected function permissions(){
+    //get the base permissions for everything
+    $this->base_permissions = $this->base_permissions();  
+    //class name
+    $class = get_class($this);
+    //cast to an array in case empty
+    $user_allowed_modules = (array) $this->current_user->permissions($class);
+    return array_merge($this->base_permissions[$class], $this->permissions, $user_allowed_modules);    
   }
   /**
    * loop over the controllers and find all public methods
