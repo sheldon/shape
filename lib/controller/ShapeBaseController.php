@@ -107,14 +107,9 @@ class ShapeBaseController extends WaxController {
     }
   }
   /**
-   * logout function, clear the sessions etc
+   * loop over the controllers and find all public methods
+   * - this operation could be heavy so cache it
    */
-  public function logout(){
-    Session::unset_var('shape_redirect_to');
-    Session::add_message('You have been logged out.');
-		$this->authenticate->logout();		
-		$this->redirect_to($this->login_path);  	
-	}
   
   /** GENERIC ACTIONS **/
   public function index(){}
