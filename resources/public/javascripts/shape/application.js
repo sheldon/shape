@@ -4,7 +4,8 @@ var warnings_config = {"class_name":"delete"};
 var inline_load_config = {"class_name": "inline-load", "replace_id":"page", "loading_class":"loading-inline-load", "error_class":"error-inline-load", "success_class":"ui-state-error", "ajax_timeout":1200};
 var form_config = {"class_name": "inline-submit", "replace_id":"page", "loading_class":"loading-inline-submit", "error_class":"error-inline-submit", "success_class":"ui-state-active", "ajax_timeout":1200};
 var filter_config = {"class_name": "filter-form", "timeout":800, "replace_id":"page", "keychange_class":"text_field", "loading_class":"loading-filter", "error_class":"erorr-filter","success_class":"success-filter", "timer":false, "ajax_timeout":1200};
-var pages_tree_config = {"source":"/shape/pages/_menu.ajax","root_id":"menu-shape-pages-list"};
+var ajax_tree_config = {"class_name":"show-children","source":"/shape/pages/_menu.ajax"};
+
 /**
  * function to trigger accordions - menu & page editing
  **/
@@ -119,8 +120,7 @@ function submit_filter(filter_box){
 function inline_load(loader){
   var conf = inline_load_config;
   if(typeof(loader) == "undefined") var loader = conf.class_name;
-  jQuery("."+loader).unbind("click");
-  jQuery("."+loader).click(function(){
+  jQuery("."+loader).unbind("click").click(function(){
     load_page(this);
     return false;
   });
@@ -243,6 +243,45 @@ function main_menu(){
 
 };
 /**
+ * sub tree ajax loading:
+ *  gets the id of the node from the rel attribute
+ *  fetches the children of that node and inserts them after it
+ *  activates ajax loading on those children, and disables on itself, instead enabling standard expand/collapse via a toggle
+ * passing in a root_selector will limit the bound elements to children of that root
+ * returns the jquery bound elements, so they can be chained or used afterwards (going to use this to implement automatic background loading when the browser is idle)
+ */
+function sub_tree_ajax_setup(root_selector){
+  return root_selector.find("."+ajax_tree_config.class_name).click(function(){
+    var clicked_tag = jQuery(this);
+    jQuery.ajax({
+      "timeout":inline_load_config.ajax_timeout,
+      "type":"post",
+      "url":ajax_tree_config.source,
+      "data":{"parent_id":clicked_tag.attr("rel")},
+      "success":function(result){
+        clicked_tag.removeClass("show-children").unbind("click");
+        if(result.length){
+          clicked_tag.after(result);
+          clicked_tag.click(function(){
+            clicked_tag.siblings("ul").toggle();
+            return false;
+          });
+          sub_tree_ajax_setup(clicked_tag.siblings("ul"));
+        }else{
+          clicked_tag.addClass(inline_load_config.class_name);
+          inline_load();
+          //load_page(clicked_tag);
+        }
+      },
+      "error":function(){
+        //not sure what to do on error, any ideas?
+      }
+    });
+    return false;
+  });
+}
+
+/**
  * Common warning functions
  */
 function warnings(){
@@ -259,36 +298,7 @@ function widgets(){
  * Page init function - handles all ajax effect js
  */
 function page_init(){
-  //inline loading
-  inline_load();
-  //filters
-  filters();
-  //ajax form submits
-  ajax_forms();
-}
-
-function load_children_pages(parent_id, injection_point){
-  var conf = inline_load_config;
   
-  jQuery.ajax({
-    "timeout":conf.ajax_timeout,
-    "type":"post",
-    "url":pages_tree_config.source,
-    "data":{"parent_id":parent_id},
-    "success":function(result){
-      injection_point.after(result);
-    },
-    "error":function(){
-      
-    }
-  });
-};
-
-function page_tree(){
-  jQuery("#"+pages_tree_config.root_id).find(".show-children").click(function(){
-    load_children_pages(jQuery(this).attr("rel"),jQuery(this));
-    return false;
-  });
 }
 
 /** initialise everything **/
@@ -297,9 +307,11 @@ jQuery(document).ready(function(){
   main_menu();
   warnings();
   widgets();
-  page_tree();
+  filters();
+  sub_tree_ajax_setup(jQuery(document));
   //nuts function that checks current address bar on page load to see if it can recall that page
   check_address_bar_for_page_load(); 
+  inline_load();
   /* functions called from page init are effected by ajax calls; so this function is recalled in each ajax call */
   page_init();
 });
