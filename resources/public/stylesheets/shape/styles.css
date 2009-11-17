@@ -33,6 +33,7 @@ body{text-align:left;}
 .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
 strong{font-weight:bold;}
 em{font-style:italic;}
+p.footnote{font-size:85%;}
 /*
 * jQuery UI CSS Framework
 * Copyright (c) 2009 AUTHORS.txt (http://jqueryui.com/about)
@@ -431,7 +432,7 @@ form.waxform fieldset label, form fieldset li label{
   font-size:116%;
   font-weight:bold;
   display:block;
-  padding:3px;
+  padding:3px 3px 3px 0;
   float:left;
   clear:both;
 }
@@ -607,10 +608,10 @@ form.split fieldset.split4{width:12%;}
   }
 
 /*large widgets are used in conjunction with a small right hand column - so needs right hand margin */
-.large-widget-column{margin-right:205px;}
+.large-widget-column{margin-right:235px;}
   .large-widget-column .widget{width:100%;}
 /*small-widget go on the right hand side*/
-.small-widget-column{width:190px;float:right;}
+.small-widget-column{width:220px;float:right;}
   .small-widget-column .widget{width:100%;}
   
 /*login page*/
