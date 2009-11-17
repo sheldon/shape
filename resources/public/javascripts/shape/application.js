@@ -42,7 +42,9 @@ function filters(filter_form){
   //hide the submit buttons
   jQuery(filter_form).find('input[type=submit]').hide();
   //keypress monitoring
-  jQuery(filter_form).find("."+filter_config.keychange_class).keyup(function(e){ 
+  var filter_box = jQuery(filter_form).find("."+filter_config.keychange_class);
+  filter_box.unbind("keyup");
+  filter_box.keyup(function(e){ 
     //clear timeout
     clearTimeout(filter_config.timer);   
     //if short then clear
@@ -59,10 +61,12 @@ function filters(filter_form){
     }
   });
   //on blur
-  jQuery(filter_form).find("."+filter_config.keychange_class).blur(function(){
+  filter_box.unbind("blur");
+  filter_box.blur(function(){
     
   });
   //dont allow form submit on filter forms
+  jQuery(filter_form).unbind("submit");
   jQuery(filter_form).submit(function(){
     return false;
   });
@@ -115,6 +119,7 @@ function submit_filter(filter_box){
 function inline_load(loader){
   var conf = inline_load_config;
   if(typeof(loader) == "undefined") var loader = conf.class_name;
+  jQuery("."+loader).unbind("click");
   jQuery("."+loader).click(function(){
     load_page(this);
     return false;
@@ -126,7 +131,7 @@ function inline_load(loader){
 function load_page(obj){
   var conf = inline_load_config,
       destination = jQuery(obj).attr('href')+".ajax",
-      method = "post"
+      method = "post",
       replace = conf.replace_id;
   if(jQuery(obj).attr('method')) method = jQuery(obj).attr('method');
   if(jQuery(obj).attr('replace')) replace = jQuery(obj).attr('replace');
