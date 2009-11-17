@@ -76,8 +76,6 @@ class ShapeBaseController extends WaxController {
   
   /**
    * login function
-   *
-   * @return void
    */
   public function login(){
     $user = new ShapeUser;
@@ -104,7 +102,9 @@ class ShapeBaseController extends WaxController {
       }
     }
   }
-  
+  /**
+   * logout function, clear the sessions etc
+   */
   public function logout(){
     Session::unset_var('shape_redirect_to');
     Session::add_message('You have been logged out.');
@@ -123,11 +123,15 @@ class ShapeBaseController extends WaxController {
     foreach(glob(CACHE_DIR."partial/*") as $file) @unlink($file);
   }
   
-  public function create(){
-    
-  }
   /**
-   * create an empty skel object, save it and move along to edit
+   * Creates an empty version of the model and depending upon
+   * result shows edit pages etc
+   *
+   */
+  public function create(){}
+  
+  /**
+   * create an empty skel object, save it and return
    */
   protected function new_model(){
     $model = new $this->model_class;
