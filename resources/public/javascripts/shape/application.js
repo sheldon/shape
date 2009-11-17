@@ -269,6 +269,7 @@ function sub_tree_ajax_setup(root_selector){
             return false;
           });
           sub_tree_ajax_setup(clicked_tag.siblings("ul"));
+          page_init();
         }else{
           clicked_tag.addClass(inline_load_config.class_name);
           load_page(clicked_tag);
