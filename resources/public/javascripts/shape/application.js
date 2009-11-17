@@ -255,6 +255,7 @@ function menu_hover_states(){
 function sub_tree_ajax_setup(root_selector){
   return root_selector.find("."+ajax_tree_config.class_name).click(function(){
     var clicked_tag = jQuery(this);
+    clicked_tag.toggleClass("ui-icon-triangle-1-e").toggleClass("ui-icon-triangle-1-s");
     clicked_tag.addClass(ajax_tree_config.loading_class);
     jQuery.ajax({
       "timeout":inline_load_config.ajax_timeout,
@@ -266,16 +267,14 @@ function sub_tree_ajax_setup(root_selector){
         if(result.length){
           var list_item = clicked_tag.closest("li");
           list_item.append(result);
-          clicked_tag.click(function(){
-            list_item.children("ul").slideToggle("normal");
-            return false;
-          });
           sub_tree_ajax_setup(list_item.children("ul"));
           page_init();
-        }else{
-          clicked_tag.addClass(inline_load_config.class_name);
-          load_page(clicked_tag);
         }
+        clicked_tag.click(function(){
+          clicked_tag.toggleClass("ui-icon-triangle-1-e").toggleClass("ui-icon-triangle-1-s");
+          list_item.children("ul").slideToggle("normal");
+          return false;
+        });
       },
       "error":function(){
         clicked_tag.removeClass(ajax_tree_config.loading_class).addClass(ajax_tree_config.error_class);

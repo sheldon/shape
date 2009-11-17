@@ -1,16 +1,5 @@
 <?if(count($shape_models)):?>
 <ul class="shape_sub_listing <?=str_replace("/", "-", $controller)?>-list">
-  <?foreach($shape_models as $i=>$model):?>
-  <li class='list_item item<?=$i?> type<?=fmod($i,2)?> '>    
-    <span class="list-hover">
-      <span class='icons'>      
-        <a href="/<?=$controller?>/edit/<?=$model->primval?>" class="ui-icon ui-icon-wrench edit inline-load" title="Editing - <?=$model->$string_field?>">&nbsp;</a>
-        <a href="/<?=$controller?>/create?source_id=<?=$model->primval?>" class="ui-icon ui-icon-plusthick " title="Create Child for <?=$model->$string_field?>">&nbsp;</a>
-      </span>    
-      <span class="ui-icon ui-icon-triangle-1-e">&nbsp;</span>      
-      <a href="/<?=$controller?>/edit/<?=$model->primval?>" title="Editing - <?=$model->title?>" class='<?=str_replace("/", "-", $controller)?>-list-item <?if($multi_level):?>show-children<?else:?>inline-load<?endif?>' rel="<?=$model->primval?>"><?=$model->$string_field?></a>
-    </span>
-  </li>
-  <?endforeach?>
+<?=partial("_menu_list",$this)?>
 </ul>
 <?endif?>

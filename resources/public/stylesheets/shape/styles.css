@@ -554,7 +554,7 @@ form.split fieldset.split4{width:12%;}
   #menu_container .ui-accordion-content{height:200px;overflow:auto;}
   #menu_container .icons{float:right;display:block;margin-right:8px;}  
   #menu_container .ui-accordion-content{padding:0}
-      #menu_container li a{padding:2px 5px 2px 20px;text-decoration:none;}
+      #menu_container li a{padding:2px 5px;text-decoration:none;}
       #menu_container li span.ui-icon{position:absolute;}
       #menu_container li span.list-hover{
         display:block;
@@ -569,11 +569,12 @@ form.split fieldset.split4{width:12%;}
       #menu_container li li li li span.list-hover{padding-left:24px;}
       #menu_container li li li li li span.list-hover{padding-left:30px;}
     
-    #menu_container .icons a{
+    #menu_container a.ui-icon{
       width:16px;
       padding:0;
       display:inline-block;
       margin-left:4px;
+      vertical-align:middle;
     } 
     .ui-state-hover .icons a.active{
       background-image:url('/images/shape/ui/ui-icons_ff0084_256x240.png');
