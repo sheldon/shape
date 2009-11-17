@@ -264,8 +264,8 @@ function sub_tree_ajax_setup(root_selector){
       "data":{"parent_id":clicked_tag.attr("rel")},
       "success":function(result){
         clicked_tag.removeClass(ajax_tree_config.loading_class+" "+ajax_tree_config.class_name).addClass(ajax_tree_config.success_class).unbind("click");
+        var list_item = clicked_tag.closest("li");
         if(result.length){
-          var list_item = clicked_tag.closest("li");
           list_item.append(result);
           sub_tree_ajax_setup(list_item.children("ul"));
           page_init();
