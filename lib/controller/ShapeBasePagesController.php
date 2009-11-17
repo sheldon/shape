@@ -18,4 +18,7 @@ class ShapeBasePagesController extends ShapeController {
     
     parent::_menu($model);
   }
+  
+  public function _recentpages(){}
+  public function _search(){}
 }?>
