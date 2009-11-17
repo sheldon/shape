@@ -1,5 +1,6 @@
 <form action="" method="post" name="wax_form" class="waxform">
   <fieldset>
+  <?if($wax_form):?>
     <ol>
     <?foreach($wax_form as $field):?>
     <?if($field->editable):?>
@@ -7,5 +8,6 @@
     <?endif?>
     <?endforeach?>
     </ol>
+  <?endif?>
   </fieldset>
 </form>

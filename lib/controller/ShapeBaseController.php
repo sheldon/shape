@@ -21,10 +21,12 @@ class ShapeBaseController extends WaxController {
   public $model_order;  //order
   public $shape_models; //WaxRecordSet of models
   public $model; // the working model
-  public $wax_form; //wax form for the model  
+  public $wax_form=false; //wax form for the model  
   public $filters = array(); //columns to filter on
   public $string_field = "title"; //field used in list
   public $multi_level = false; //this will trigger fetching of multi level nav - mainly designed for the pages system
+  public $model_posted=false;
+  public $model_saved=false;
   
   public $site_name; //$_SERVER['http_host']
   public $widgets = array("shape/pages/_search", "shape/statistics/_analytics", "shape/dashboard/_summary", "shape/pages/_recentpages"); //default widget
@@ -74,8 +76,6 @@ class ShapeBaseController extends WaxController {
   
   /**
    * login function
-   *
-   * @return void
    */
   public function login(){
     $user = new ShapeUser;
@@ -102,7 +102,9 @@ class ShapeBaseController extends WaxController {
       }
     }
   }
-  
+  /**
+   * logout function, clear the sessions etc
+   */
   public function logout(){
     Session::unset_var('shape_redirect_to');
     Session::add_message('You have been logged out.');
@@ -121,11 +123,15 @@ class ShapeBaseController extends WaxController {
     foreach(glob(CACHE_DIR."partial/*") as $file) @unlink($file);
   }
   
-  public function create(){
-    
-  }
   /**
-   * create an empty skel object, save it and move along to edit
+   * Creates an empty version of the model and depending upon
+   * result shows edit pages etc
+   *
+   */
+  public function create(){}
+  
+  /**
+   * create an empty skel object, save it and return
    */
   protected function new_model(){
     $model = new $this->model_class;
@@ -141,33 +147,59 @@ class ShapeBaseController extends WaxController {
     else return false;
   }
   /**
-   * Edit function, doesn't do much, just create the page object
+   * Edit function, doesn't do much, just call the edit function
+   *
+   * As the none js version of the page posts to this then
+   * it just needs to call the _edit function, which checks
    */
   public function edit($model = false){
     $this->_edit($model);
   }
-  /*partial function, just checks post */
+  /**
+   * As the form reference to the edit partial passes in $this,
+   * this function should never get called by the partial.
+   * 
+   * Called via an ajax command, this will check the post data
+   * and try to save the model
+   */
   public function _edit($model=false){
     
     if($model instanceof WaxModel) $this->model = $model;
     else if(is_numeric($primval = Request::param('id'))) $this->model = new $this->model_class($primval);
-    if($this->model) $this->wax_form = new WaxForm($this->model);
-    else $this->use_view = "_not_found";
+    /**
+     * check for model posting and save data
+     */
+    if($this->model){      
+      $this->wax_form = new WaxForm($this->model);
+      if($this->model->is_posted()){
+        $this->model_posted = true;
+        if($saved = $this->wax_form->save()){
+          $this->model = $saved;
+          $this->model_saved = true;
+        }else $this->model_saved = false;        
+      }      
+      
+    }else{
+      $this->model_posted = $this->model_saved = false;
+      $this->use_view = "_not_found";
+    }
   }
   
   
   public function delete(){}
   
-  /** GENERIC PARTIALS **/
   /**
    * fetch everything for this model and spit it out
+   *
+   * Called via partial call without a template passed
+   * in & in the case of pages via ajax call
    */
   public function _menu($model = false){
     if(!$model) $model = new $this->model_class;
     $this->shape_models = $model->order($this->model_order)->all();
   }
   
-  /**widget partials**/
+  /** WIDGET PARTIALS **/
   public function _search(){}
   public function _summary(){}
   public function _analytics(){}
