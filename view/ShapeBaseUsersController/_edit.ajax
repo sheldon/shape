@@ -1,5 +1,5 @@
 
-<h3 class='widget-title ui-widget-header ui-helper-clearfix ui-corner-all ui-state-default'>User Information</h3>
+<h3 class='widget-title ui-widget-header ui-helper-clearfix ui-corner-all ui-state-default'>Information</h3>
 <div class="widget-content">
   <form action="/<?=$controller?>/_edit/<?=$model->primval?>" method="post" name="wax_form" class="widget-form edit-form inline-submit" replace="<?=str_replace("/", "-",$controller)?>-edit-<?=$model->primval?>">
     <fieldset>
