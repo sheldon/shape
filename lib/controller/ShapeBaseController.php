@@ -147,20 +147,27 @@ class ShapeBaseController extends WaxController {
    * result shows edit pages etc
    *
    */
-  public function create(){}
+  public function create($model = false){
+    if($model instanceof WaxModel) $new_model = $model;
+    else $new_model = $this->new_model();
+    
+    $this->use_view = "edit";
+    if($new_model)
+      $this->edit($new_model);
+  }
   
   /**
    * create an empty skel object, save it and return
    */
   protected function new_model(){
     $model = new $this->model_class;
-     //find the required fields and give them default values
+    //find the required fields and give them default values
     foreach($model->columns as $name=>$values){
+      if($name == $model->primary_key || $values[0] == "HasManyField" || $values[0] == "ManyToManyField") continue;
       if($values[1]['unique']) $model->$name = time();
-      elseif($values[1] && $values[1]['required'] && !$values[1]['target_model']) {
-        if($values[0] == "FloatField" || $values[0] == "IntegerField" || $values[0] == "BooleanField") $model->$name = 0;
-        elseif($values[0] == "EmailField") $model->$name = "fill.me@in.com";
-      }else $model->$name = $name;
+      elseif($values[0] == "FloatField" || $values[0] == "IntegerField" || $values[0] == "BooleanField" || $values[0] == "ForeignKey") $model->$name = 0;
+      elseif($values[0] == "EmailField") $model->$name = "fill.me@in.com";
+      else $model->$name = $name;
     }
     if($saved = $model->save()) return $saved;
     else return false;

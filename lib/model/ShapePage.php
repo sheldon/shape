@@ -7,7 +7,7 @@ class ShapePage extends WaxTreeModel {
     $this->define("url", "CharField");
     
     $this->define("status", "IntegerField", array("maxlength"=>2));
-    $this->define("order", "IntegerField", array("maxlength"=>3, "editable"=>false));
+    $this->define("order_by", "IntegerField", array("maxlength"=>3, "editable"=>false));
     $this->define("pageviews", "IntegerField", array());
     
     $this->define("date_published", "DateTimeField");

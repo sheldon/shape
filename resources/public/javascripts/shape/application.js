@@ -3,8 +3,8 @@ var menu_config = {"id":"main_menu", "h3_active_class":"active", "h3_hover_class
 var warnings_config = {"class_name":"delete"};
 var inline_load_config = {"class_name": "inline-load", "replace_id":"page", "loading_class":"loading-inline-load", "error_class":"error-inline-load", "success_class":"ui-state-error", "ajax_timeout":1200};
 var form_config = {"class_name": "inline-submit", "replace_id":"page", "loading_class":"loading-inline-submit", "error_class":"error-inline-submit", "success_class":"ui-state-active", "ajax_timeout":1200};
-var filter_config = {"class_name": "filter-form", "timeout":800, "replace_id":"page", "keychange_class":"text_field", "loading_class":"loading-filter", "error_class":"erorr-filter","success_class":"success-filter", "timer":false, "ajax_timeout":1200};
-var ajax_tree_config = {"class_name":"show-children","source":"/shape/pages/_menu.ajax"};
+var filter_config = {"class_name": "filter-form", "timeout":800, "replace_id":"page", "keychange_class":"text_field", "loading_class":"loading-filter", "error_class":"error-filter","success_class":"success-filter", "timer":false, "ajax_timeout":1200};
+var ajax_tree_config = {"class_name":"show-children", "source":"/shape/pages/_menu.ajax", "loading_class":"loading-tree", "error_class":"error-tree", "success_class":"success-tree"};
 
 /**
  * function to trigger accordions - menu & page editing
@@ -55,7 +55,7 @@ function filters(filter_form){
       if(jQuery(filter_form).attr('show_and_hide')) jQuery(replace).hide();
     //only run the filter on certain keys  
     }else if(e.which == 8 || e.which == 32 || (65 <= e.which && e.which <= 65 + 25) || (97 <= e.which && e.which <= 97 + 25) || e.which == 160 || e.which == 127){
-      jQuery(this).children(filter_config.keychange_class).removeClass(filter_config.success_class).removeClass(filter_config.error_class).addClass(filter_config.loading_class);
+      jQuery(this).children(filter_config.keychange_class).removeClass(filter_config.success_class+" "+filter_config.error_class).addClass(filter_config.loading_class);
       var obj =jQuery(this);
       var filter_func = function(){submit_filter(obj); };
       filter_config.timer = setTimeout(filter_func, timeout);
@@ -85,7 +85,7 @@ function submit_filter(filter_box){
   
   if(jQuery(filter_box).parents('form').attr('replace')) replace = '#'+jQuery(filter_box).parents('form').attr('replace'); //overwrite the replacement
   //remove classes
-  jQuery(filter_box).removeClass(filter_config.success_class).removeClass(filter_config.error_class).addClass(filter_config.loading_class);
+  jQuery(filter_box).removeClass(filter_config.success_class+" "+filter_config.error_class).addClass(filter_config.loading_class);
   //the ajax call
   jQuery.ajax({
     "timeout": filter_config.ajax_timeout,
@@ -94,14 +94,14 @@ function submit_filter(filter_box){
     "data": form_data,
     "success":function(result){
       clearTimeout(filter_config.timer);
-      jQuery(filter_box).addClass(filter_config.success_class).removeClass(filter_config.error_class).removeClass(filter_config.loading_class);
+      jQuery(filter_box).addClass(filter_config.success_class).removeClass(filter_config.error_class+" "+filter_config.loading_class);
       if(show_hide) jQuery(replace).show();
       jQuery(replace).html(result);
       page_init();      
     },
     "error":function(){
       clearTimeout(filter_config.timer);
-      jQuery(filter_box).removeClass(filter_config.success_class).addClass(filter_config.error_class).removeClass(filter_config.loading_class);
+      jQuery(filter_box).removeClass(filter_config.success_class+" "+filter_config.loading_class).addClass(filter_config.error_class);
       if(show_hide) jQuery(replace).hide();
       page_init();
     }
@@ -136,9 +136,9 @@ function load_page(obj){
   if(jQuery(obj).attr('method')) method = jQuery(obj).attr('method');
   if(jQuery(obj).attr('replace')) replace = jQuery(obj).attr('replace');
   
-  jQuery('#'+menu_config.id+" .list-hover").removeClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class);    
+  jQuery('#'+menu_config.id+" .list-hover").removeClass(conf.error_class+" "+conf.success_class+" "+conf.loading_class);
   jQuery(obj).closest('.list-hover').addClass(conf.loading_class);    
-  jQuery("#"+replace).removeClass(conf.error_class).removeClass(conf.success_class).addClass(conf.loading_class).html(''); //remove classes & blank the html
+  jQuery("#"+replace).removeClass(conf.error_class+" "+conf.success_class).addClass(conf.loading_class).html(''); //remove classes & blank the html
   
   jQuery.ajax({
     "timeout":conf.ajax_timeout,
@@ -148,15 +148,15 @@ function load_page(obj){
       document.title = obj.title;
       if(window.location.toString().indexOf('#')>0) window.location = window.location.toString().substring(0, window.location.toString().indexOf('#')) + "#"+destination;
       else window.location = window.location.toString()+"#"+destination;      
-      jQuery(obj).closest('.list-hover').removeClass(conf.error_class).addClass(conf.success_class).removeClass(conf.loading_class);
-      jQuery("#"+replace).removeClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class).html(result); //remove classes & blank the html 
+      jQuery(obj).closest('.list-hover').removeClass(conf.error_class+" "+conf.loading_class).addClass(conf.success_class);
+      jQuery("#"+replace).removeClass(conf.error_class+" "+conf.success_class+" "+conf.loading_class).html(result); //remove classes & blank the html 
       accordion_alteration(obj);
       page_init();      
       
     },
     "error":function(){
-      jQuery(obj).closest('.list-hover').addClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class);    
-      jQuery("#"+replace).addClass(conf.error_class).removeClass(conf.success_class).removeClass(conf.loading_class); //remove classes & blank the html 
+      jQuery(obj).closest('.list-hover').removeClass(conf.success_class+" "+conf.loading_class).addClass(conf.error_class);
+      jQuery("#"+replace).removeClass(conf.success_class+" "+conf.loading_class).addClass(conf.error_class); //remove classes & blank the html
       page_init();
     }
   });
@@ -193,12 +193,12 @@ function submit_form(obj){
     "url":destination,
     "data": form_data,
     "success":function(result){
-      jQuery(obj).addClass(form_config.success_class).removeClass(form_config.error_class).removeClass(form_config.loading_class);
+      jQuery(obj).removeClass(form_config.error_class+" "+form_config.loading_class).addClass(form_config.success_class);
       jQuery(replace).html(result);
       page_init();      
     },
     "error":function(){
-      jQuery(obj).removeClass(form_config.success_class).addClass(form_config.error_class).removeClass(form_config.loading_class);
+      jQuery(obj).removeClass(form_config.success_class+" "+form_config.loading_class ).addClass(form_config.error_class);
       page_init();
     }
   });
@@ -255,29 +255,29 @@ function menu_hover_states(){
 function sub_tree_ajax_setup(root_selector){
   return root_selector.find("."+ajax_tree_config.class_name).click(function(){
     var clicked_tag = jQuery(this);
+    clicked_tag.toggleClass("ui-icon-triangle-1-e").toggleClass("ui-icon-triangle-1-s");
+    clicked_tag.addClass(ajax_tree_config.loading_class);
     jQuery.ajax({
       "timeout":inline_load_config.ajax_timeout,
       "type":"post",
       "url":ajax_tree_config.source,
       "data":{"parent_id":clicked_tag.attr("rel")},
       "success":function(result){
-        clicked_tag.removeClass("show-children").unbind("click");
+        clicked_tag.removeClass(ajax_tree_config.loading_class+" "+ajax_tree_config.class_name).addClass(ajax_tree_config.success_class).unbind("click");
+        var list_item = clicked_tag.closest("li");
         if(result.length){
-          var list_item = clicked_tag.closest("li");
           list_item.append(result);
-          clicked_tag.click(function(){
-            list_item.children("ul").slideToggle("normal");
-            return false;
-          });
-          sub_tree_ajax_setup(clicked_tag.siblings("ul"));
+          sub_tree_ajax_setup(list_item.children("ul"));
           page_init();
-        }else{
-          clicked_tag.addClass(inline_load_config.class_name);
-          load_page(clicked_tag);
         }
+        clicked_tag.click(function(){
+          clicked_tag.toggleClass("ui-icon-triangle-1-e").toggleClass("ui-icon-triangle-1-s");
+          list_item.children("ul").slideToggle("fast");
+          return false;
+        });
       },
       "error":function(){
-        //not sure what to do on error, any ideas?
+        clicked_tag.removeClass(ajax_tree_config.loading_class).addClass(ajax_tree_config.error_class);
       }
     });
     return false;
