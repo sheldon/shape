@@ -428,9 +428,9 @@ h4{font-size:116%;} /*15pt*/
 h1,h2,h3,h4{margin-bottom:10px;}
 /** FORMS **/
 /*login*/
-body.shape-dashboard-login #page{
-  width:300px;
-  margin:auto;
+form legend{
+  font-weight:bold;
+  font-size:85%;
 }
 form.waxform fieldset label, form fieldset li label{
   font-size:116%;
@@ -478,6 +478,9 @@ form.edit-form span.error_message{
 form.edit-form input.text_field{
   display:block;
   width:72%;
+}
+form.tag-form fieldset{
+  margin:10px 0;
 }
 /* saved & error general message box */
 .form-message{
@@ -622,10 +625,24 @@ form.split fieldset.split4{width:12%;}
 /*small-widget go on the right hand side*/
 .small-widget-column{width:220px;float:right;}
   .small-widget-column .widget{width:100%;}
-  
+ 
+/** on / off tag item styles **/
+.tag{
+  background:black;
+  padding:4px;
+  float:left;
+  margin:5px 10px 5px 0;
+  -moz-border-radius:2px;
+  -webkit-border-radius:2px;
+  font-size:85%;
+  color:white;
+  text-decoration:none;
+}
+a.state-1{background:#37CF32;}
+a.state-0{background:#C90C11;}
 /*login page*/
-body.shape-login #content{width:50%;margin:30px auto;}
-body.shape-login #menu_container{display:none;width:0;}
-body.shape-login #page{width:100%;margin:auto;}
-body.shape-login #page form{width:180px;margin:10px auto;}
-body.shape-login #page h1{text-align:center;}
+body.shape-dashboard-login #content{width:50%;margin:30px auto;}
+body.shape-dashboard-login #menu_container{display:none;width:0;}
+body.shape-dashboard-login #page{width:100%;margin:auto;}
+body.shape-dashboard-login #page form{width:180px;margin:10px auto;}
+body.shape-dashboard-login #page h1{text-align:center;}
