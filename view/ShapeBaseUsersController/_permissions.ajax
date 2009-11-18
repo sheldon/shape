@@ -1,0 +1,11 @@
+<h3 class='widget-title ui-widget-header ui-helper-clearfix ui-corner-all ui-state-default'>Permissions</h3>
+<div class="widget-content">
+  <form action="/<?=$controller?>/_permissons/<?=$model->primval?>" method="post" id="<?=str_replace("/", "-",$controller)?>-permissions-form" class="edit-form">
+  <?foreach($controller_list as $classname=>$controller):?>
+  <fieldset>
+    <legend><?=$classname?></legend>
+    
+  </fieldset>
+  <?endforeach?>
+  </form>
+</div>
