@@ -18,6 +18,7 @@ class ShapeBaseController extends WaxController {
   
   public $base_permissions = array(); //base permissions to be merged with extended ones
   public $permissions = array(); //stub for extendable permissions, can be added to extended controllers easily
+  public $all_permissions = array();
   public $excluded_from_permissions = array('__construct', 'controller_global');
   
   public $model_class; //class name
@@ -59,9 +60,7 @@ class ShapeBaseController extends WaxController {
     //fetch all the registered controllers
     if($controller_list = constant("CONTROLLER_LIST")) $this->controller_list = unserialize($controller_list);
     
-    if($route != $this->login_path){
-      $this->permissions = $this->permissions();
-    }
+    if($route != $this->login_path) $this->permissions = $this->permissions();
     
     $this->site_name = $_SERVER['HTTP_HOST'];
 	  /*
@@ -92,12 +91,23 @@ class ShapeBaseController extends WaxController {
    */
   protected function permissions(){
     //get the base permissions for everything
-    $this->base_permissions = $this->base_permissions();  
+    $this->base_permissions = $this->base_permissions();    
     //class name
-    $class = get_class($this);
+    $this_class = get_class($this);    
     //cast to an array in case empty
-    $user_allowed_modules = (array) $this->current_user->permissions($class);
-    return array_merge($this->base_permissions[$class], $this->permissions, $user_allowed_modules);    
+    $user_allowed = (array) $this->current_user->permissions();
+    $controller_allowed=array();
+    foreach($this->controller_list as $classname=>$controller){
+      $obj = new $classname(false);
+      $perm = $obj->permissions;
+      $ex = $obj->excluded_from_permissions;
+      foreach($perm as $name=>$val){
+        if(!in_array($name, $ex)) $controller_allowed[$classname][$name] = $val; 
+      }
+      //controller_allowed
+      $this->all_permissions[$classname] = array_merge((array) $this->base_permissions[$classname], (array) $controller_allowed[$classname], (array) $user_allowed[$classname]);
+    }
+    return $this->all_permissions[$this_class];
   }
   /**
    * loop over the controllers and find all public methods
