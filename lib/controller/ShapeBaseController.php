@@ -17,8 +17,8 @@ class ShapeBaseController extends WaxController {
   public $authenticate=false;
   
   public $base_permissions = array(); //base permissions to be merged with extended ones
-  public $permissions = array(); //stub for extendable permissions, can be added to extended controllers easily
-  public $all_permissions = array();
+  public $permissions = array(); //custom permissions go here and it will end up being current permissions for the controller youre in
+  public $all_permissions = array(); //all controllers, users and everything
   public $excluded_from_permissions = array('__construct', 'controller_global');
   
   public $model_class; //class name
