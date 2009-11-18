@@ -15,10 +15,11 @@ class ShapeUser extends WaxModel {
 	  return $this->firstname." ".$this->surname;
 	}
 	
-	public function permissions($class){
+	public function permissions($class=false){
     $modules = array();
     foreach($this->permissions as $perm) $modules[$perm->classname][$perm->action] = $perm->allowed;
-    return $modules[$class];
+    if($class) return $modules[$class];
+    else return $modules;
 	}
 	
 	public function title(){return $this->fullname ." (".$this->username.")";}
