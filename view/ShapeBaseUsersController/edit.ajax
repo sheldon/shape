@@ -19,4 +19,9 @@
     <?=partial("_edit", $this, $use_format)?>
   </div>
   
+  
+  <div class='ui-widget <?=str_replace("/", "-",$controller)?> widget clearfix large-widget' id="<?=str_replace("/", "-",$controller)?>-permissions-<?=$model->primval?>">
+    <?=partial("_permissions", $this, $use_format)?>
+  </div>
+  
 </div>
