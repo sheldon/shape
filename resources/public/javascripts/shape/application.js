@@ -4,7 +4,7 @@ var warnings_config = {"class_name":"delete"};
 var inline_load_config = {"class_name": "inline-load", "replace_id":"page", "loading_class":"loading-inline-load", "error_class":"error-inline-load", "success_class":"ui-state-error", "ajax_timeout":1200};
 var form_config = {"class_name": "inline-submit", "replace_id":"page", "loading_class":"loading-inline-submit", "error_class":"error-inline-submit", "success_class":"ui-state-active", "ajax_timeout":1200};
 var filter_config = {"class_name": "filter-form", "timeout":800, "replace_id":"page", "keychange_class":"text_field", "loading_class":"loading-filter", "error_class":"error-filter","success_class":"success-filter", "timer":false, "ajax_timeout":1200};
-var ajax_tree_config = {"class_name":"show-children", "source":"/shape/pages/_menu.ajax", "loading_class":"loading-tree", "error_class":"error-tree", "success_class":"success-tree"};
+var ajax_tree_config = {"class_name":"show-children", "source":"/shape/pages/_menu.ajax", "loading_class":"loading-tree", "error_class":"error-tree", "success_class":"success-tree","ajax_timeout":1200};
 
 /**
  * function to trigger accordions - menu & page editing
@@ -254,30 +254,61 @@ function menu_hover_states(){
  */
 function sub_tree_ajax_setup(root_selector){
   return root_selector.find("."+ajax_tree_config.class_name).click(function(){
+    sub_tree_ajax_load(jQuery(this));
+    return false;
+  });
+}
+
+function sub_tree_ajax_load(clicked_tag){
+  clicked_tag.toggleClass("ui-icon-triangle-1-e").toggleClass("ui-icon-triangle-1-s");
+  clicked_tag.addClass(ajax_tree_config.loading_class);
+  jQuery.ajax({
+    "timeout":ajax_tree_config.ajax_timeout,
+    "type":"post",
+    "url":ajax_tree_config.source,
+    "data":{"parent_id":clicked_tag.attr("rel")},
+    "success":function(result){
+      clicked_tag.removeClass(ajax_tree_config.loading_class+" "+ajax_tree_config.class_name).addClass(ajax_tree_config.success_class).unbind("click");
+      var list_item = clicked_tag.closest("li");
+      if(result.length){
+        list_item.append(result);
+        sub_tree_ajax_setup(list_item.children("ul"));
+        page_init();
+      }
+      clicked_tag.click(function(){
+        clicked_tag.toggleClass("ui-icon-triangle-1-e").toggleClass("ui-icon-triangle-1-s");
+        list_item.children("ul").slideToggle("fast");
+        return false;
+      });
+    },
+    "error":function(){
+      clicked_tag.removeClass(ajax_tree_config.loading_class).addClass(ajax_tree_config.error_class);
+    }
+  });
+}
+
+/**
+ * inline create call:
+ *  creates a new node in the tree
+ *  adds it to the list under that node, or if no list exists fetches the full list of children
+ */
+function inline_create(){
+  jQuery(".inline-create").unbind("click").click(function(){
     var clicked_tag = jQuery(this);
-    clicked_tag.toggleClass("ui-icon-triangle-1-e").toggleClass("ui-icon-triangle-1-s");
-    clicked_tag.addClass(ajax_tree_config.loading_class);
+    var destination = clicked_tag.attr('href').replace("?",".ajax?"); //all ajax calls to use the .ajax result
     jQuery.ajax({
-      "timeout":inline_load_config.ajax_timeout,
-      "type":"post",
-      "url":ajax_tree_config.source,
-      "data":{"parent_id":clicked_tag.attr("rel")},
+      "timeout": form_config.ajax_timeout,
+      "type":"get",
+      "url":destination,
       "success":function(result){
-        clicked_tag.removeClass(ajax_tree_config.loading_class+" "+ajax_tree_config.class_name).addClass(ajax_tree_config.success_class).unbind("click");
-        var list_item = clicked_tag.closest("li");
-        if(result.length){
-          list_item.append(result);
-          sub_tree_ajax_setup(list_item.children("ul"));
-          page_init();
-        }
-        clicked_tag.click(function(){
-          clicked_tag.toggleClass("ui-icon-triangle-1-e").toggleClass("ui-icon-triangle-1-s");
-          list_item.children("ul").slideToggle("fast");
-          return false;
-        });
+        var children = clicked_tag.closest("li").children("ul");
+        if(children.length){
+          children.append(result);
+          page_init();      
+        }else sub_tree_ajax_load(clicked_tag.closest(".list-hover").children(".tree-node"));
       },
       "error":function(){
-        clicked_tag.removeClass(ajax_tree_config.loading_class).addClass(ajax_tree_config.error_class);
+        //nothing in error so far. maybe show an icon to indicate the failure, or a dialog
       }
     });
     return false;
@@ -303,6 +334,7 @@ function widgets(){
 function page_init(){
   filters();
   inline_load();
+  inline_create();
   ajax_forms();
   menu_hover_states();
 }

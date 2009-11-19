@@ -3,10 +3,10 @@
   <span class="list-hover">
     <span class='icons'>
       <a href="/<?=$controller?>/edit/<?=$model->primval?>" class="ui-icon ui-icon-wrench edit inline-load" title="Edit - <?=str_ireplace(PLUGIN_NAME, "", get_class($model))?> - <?=$model->$string_field?>">&nbsp;</a>
-      <a href="/<?=$controller?>/create?source_id=<?=$model->primval?>" class="ui-icon ui-icon-plusthick " title="Create Child for <?=$model->$string_field?>">&nbsp;</a>
+      <a href="/<?=$controller?>/create?parent_id=<?=$model->primval?>" class="ui-icon ui-icon-plusthick inline-create" title="Create Child for <?=$model->$string_field?>">&nbsp;</a>
     </span>
     <a href="#<?=$model->primval?>"
-       class="ui-icon <?if($multi_level):?>ui-icon-triangle-1-e show-children<?else:?>ui-icon-battery-0<?endif?>"
+       class="ui-icon <?if($multi_level):?>ui-icon-triangle-1-e show-children tree-node<?else:?>ui-icon-battery-0<?endif?>"
        rel="<?=$model->primval?>"
     >&nbsp;</a>
     <a href="/<?=$controller?>/edit/<?=$model->primval?>"
