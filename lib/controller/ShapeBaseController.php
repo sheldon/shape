@@ -91,21 +91,20 @@ class ShapeBaseController extends WaxController {
    */
   protected function permissions(){
     //get the base permissions for everything
-    $this->base_permissions = $this->base_permissions();    
-    //class name
-    $this_class = get_class($this);    
+    $this->base_permissions = $this->base_permissions();            
     //cast to an array in case empty
     $user_allowed = (array) $this->current_user->permissions();
     $controller_allowed=array();
     foreach($this->controller_list as $classname=>$controller){
       $obj = new $classname(false);
-      $perm = $obj->permissions;
+      //merge the base permissions for this class with the obj permissions
+      $perm = array_merge($obj->permissions, $this->base_permissions[$classname]);
       $ex = $obj->excluded_from_permissions;
+      $controller_allowed[$classname] = array();
       foreach($perm as $name=>$val){
         if(!in_array($name, $ex)) $controller_allowed[$classname][$name] = $val; 
-      }
-      //controller_allowed
-      $this->all_permissions[$classname] = array_merge((array) $this->base_permissions[$classname], (array) $controller_allowed[$classname], (array) $user_allowed[$classname]);
+      }    
+      $this->all_permissions[$classname] = array_merge((array) $this->base_permissions[$classname], $controller_allowed[$classname], (array) $user_allowed[$classname]);
     }
     return $this->all_permissions[$this_class];
   }
@@ -131,7 +130,7 @@ class ShapeBaseController extends WaxController {
           if(str_replace("Base", "", $method->class) == $name || $method->class == "ShapeBaseController"){
             $this_method = new ReflectionMethod($controller, $method->name);
             //and the method is public then add it to the permissions array..
-        		if($this_method->isPublic() && !in_array($method->name, $this->excluded_from_permissions)) $permissions[$name][$method->name] = 1;
+        		if($this_method->isPublic() && !in_array($method->name, $controller->excluded_from_permissions)) $permissions[$name][$method->name] = 1;
           }
         }      
       }
