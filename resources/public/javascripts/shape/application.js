@@ -5,7 +5,7 @@ var inline_load_config = {"class_name": "inline-load", "replace_id":"page", "loa
 var form_config = {"class_name": "inline-submit", "replace_id":"page", "loading_class":"loading-inline-submit", "error_class":"error-inline-submit", "success_class":"ui-state-active", "ajax_timeout":1200};
 var filter_config = {"class_name": "filter-form", "timeout":800, "replace_id":"page", "keychange_class":"text_field", "loading_class":"loading-filter", "error_class":"error-filter","success_class":"success-filter", "timer":false, "ajax_timeout":1200};
 var ajax_tree_config = {"class_name":"show-children", "source":"/shape/pages/_menu.ajax", "loading_class":"loading-tree", "error_class":"error-tree", "success_class":"success-tree","ajax_timeout":1200};
-
+var tag_config = {"class_name":"tag","replace_id":"page","loading_class":"loading-tag", "error_class":"error-tag", "success_class":"success-tag", "ajax_timeout":1200, "method":"post"};
 /**
  * function to trigger accordions - menu & page editing
  **/
@@ -321,7 +321,6 @@ function inline_create(){
  *  method - post or get
  *  replace - what to replace
  *
- * var tag_config = {"class_name":"tag","replace_id":"page","loading_class":"loading-tag", "error_class":"error-tag", "success_class":"success-tag", "ajax_timeout":1200};
  */
 function on_off_tags(){
   var config = tag_config;
