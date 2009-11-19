@@ -5,7 +5,7 @@ var inline_load_config = {"class_name": "inline-load", "replace_id":"page", "loa
 var form_config = {"class_name": "inline-submit", "replace_id":"page", "loading_class":"loading-inline-submit", "error_class":"error-inline-submit", "success_class":"ui-state-active", "ajax_timeout":1200};
 var filter_config = {"class_name": "filter-form", "timeout":800, "replace_id":"page", "keychange_class":"text_field", "loading_class":"loading-filter", "error_class":"error-filter","success_class":"success-filter", "timer":false, "ajax_timeout":1200};
 var ajax_tree_config = {"class_name":"show-children", "source":"/shape/pages/_menu.ajax", "loading_class":"loading-tree", "error_class":"error-tree", "success_class":"success-tree"};
-
+var tag_config = {"class_name":"tag","replace_id":"page","loading_class":"loading-tag", "error_class":"error-tag", "success_class":"success-tag", "ajax_timeout":1200, "method":"post"};
 /**
  * function to trigger accordions - menu & page editing
  **/
@@ -285,6 +285,45 @@ function sub_tree_ajax_setup(root_selector){
 }
 
 /**
+ * FUNCTIONS FOR TAGGING
+ *  href - destination (with a .ajax ext)
+ *  method - post or get
+ *  replace - what to replace
+ *
+ * var tag_config = {"class_name":"tag","replace_id":"page","loading_class":"loading-tag", "error_class":"error-tag", "success_class":"success-tag", "ajax_timeout":1200};
+ */
+function on_off_tags(){
+  var config = tag_config;
+  jQuery("."+config.class_name).unbind("click");
+  jQuery("."+config.class_name).click(function(){
+    change_tag(this);
+    return false;
+  });
+};
+
+function change_tag(obj){
+  var config = tag_config,
+      destination = jQuery(obj).attr('href').replace('?', ".ajax?"),
+      method = config.method,
+      replace = "#"+config.replace_id;
+  if(jQuery(obj).attr('method')) method = jQuery(obj).attr('method');
+  if(jQuery(obj).attr('replace')) replace = "#"+jQuery(obj).attr('replace');
+  jQuery.ajax({
+    "timeout":config.ajax_timeout,
+    "type":method,
+    "url":destination,
+    "success":function(result){
+      jQuery(obj).removeClass(config.error_class+" "+config.loading_class ).addClass(config.success_class);
+      jQuery(replace).html(result);
+      page_init();
+    },
+    "error":function(){
+      jQuery(obj).removeClass(config.success_class+" "+config.loading_class ).addClass(config.error_class);
+      page_init();
+    }
+  });
+}
+/**
  * Common warning functions
  */
 function warnings(){
@@ -305,6 +344,7 @@ function page_init(){
   inline_load();
   ajax_forms();
   menu_hover_states();
+  on_off_tags();
 }
 
 /** initialise everything **/
