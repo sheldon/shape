@@ -1,14 +1,15 @@
+<?$replace=str_replace("/", "-",$controller)."-permissions-".$model->primval;?>
 <h3 class='widget-title ui-widget-header ui-helper-clearfix ui-corner-all ui-state-default'>Permissions</h3>
 <div class="widget-content">
   <p>Click on a property to enable or disable it.</p>
   <form action="/<?=$controller?>/_permissons/<?=$model->primval?>" method="post" id="<?=str_replace("/", "-",$controller)?>-permissions-form" class="edit-form tag-form">
-  <?foreach($controller_list as $classname=>$controller):?>
+  <?foreach($controller_list as $classname=>$cont):?>
     <?if(is_array($all_permissions[$classname])):?>
     <fieldset>
       <legend><?=$classname?></legend>
       <div class="clearfix">
       <?foreach($all_permissions[$classname] as $action=>$value):?>
-      <a href='/<?=$controller?>/_permissons/<?=$model->primval?>?classname=<?=$classname?>&amp;action=<?=$action?>&amp;current_value=<?=$value?>' title='Permission for <?=$action?>' class="permission tag <?=strtolower($classname)?>-<?=$action?>-<?=$value?> state-<?=$value?> clearfix"><?=$action?></a>
+      <a href='/<?=$controller?>/_permissons/<?=$model->primval?>?classname=<?=$classname?>&amp;act=<?=$action?>&amp;current_value=<?=$value?>' title='Permission for <?=$action?>' class="permission tag <?=strtolower($classname)?>-<?=$action?>-<?=$value?> state-<?=$value?> clearfix" replace="<?=$replace?>"><?=$action?></a>
       <?endforeach?>
       </div>
     </fieldset>
