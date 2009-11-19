@@ -575,6 +575,11 @@ form.split fieldset.split4{width:12%;}
       #menu_container li li li span.list-hover{padding-left:18px;}
       #menu_container li li li li span.list-hover{padding-left:24px;}
       #menu_container li li li li li span.list-hover{padding-left:30px;}
+      #menu_container li li li li li li span.list-hover{padding-left:36px;}
+      #menu_container li li li li li li li span.list-hover{padding-left:42px;}
+      #menu_container li li li li li li li li span.list-hover{padding-left:48px;}
+      #menu_container li li li li li li li li li span.list-hover{padding-left:54px;}
+      #menu_container li li li li li li li li li li span.list-hover{padding-left:60px;}
     
     #menu_container a.ui-icon{
       width:16px;

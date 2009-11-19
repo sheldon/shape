@@ -22,6 +22,9 @@ class ShapeBasePagesController extends ShapeController {
   public function create($model = false){
     if($this->use_format == "ajax"){
       $this->new_model = $this->new_model();
+      $this->new_model->parent_id = Request::get("parent_id");
+      $this->new_model->save();
+      $this->shape_models = array($this->new_model); //this is so that we can reuse the _menu_list partial to show just 1 item
     }else parent::create($model);
   }
   
