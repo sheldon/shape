@@ -35,8 +35,26 @@ class ShapeBaseUsersController extends ShapeController {
    * user permissions
    * - again, partial is first called with $this so this is only posted to later
    */
-  public function _permissions(){
-    
+  public function _permissons(){
+    if(($class = Request::param('classname')) && ($act = Request::param('act')) ){
+      $current = Request::param('current_value');
+      if(is_numeric($primval = Request::param('id'))) $this->model = new $this->model_class($primval);      
+      if($existing = $this->model->permissions){
+        foreach($existing as $found){
+          if($found->classname == $class && $found->action == $act) $permission = $found;
+        }
+      }
+      if(!$permission || !$permission->primval) $permission = new ShapePermission;
+      $permission->classname=$class;
+      $permission->action=$act;
+      if($current) $permission->allowed = 0;
+      else $permission->allowed = 1;
+
+      $this->model->permissions = $permission; 
+      //call the parent function to reset all_permission array
+      $this->permissions();
+    }
+    $this->use_view = "_permissions";
   }
 
 }?>
