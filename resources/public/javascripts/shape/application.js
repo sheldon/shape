@@ -260,7 +260,7 @@ function sub_tree_ajax_setup(root_selector){
 }
 
 function sub_tree_ajax_load(clicked_tag){
-  clicked_tag.toggleClass("ui-icon-triangle-1-e").toggleClass("ui-icon-triangle-1-s");
+  clicked_tag.removeClass("ui-icon-triangle-1-e").addClass("ui-icon-triangle-1-s");
   clicked_tag.addClass(ajax_tree_config.loading_class);
   jQuery.ajax({
     "timeout":ajax_tree_config.ajax_timeout,
