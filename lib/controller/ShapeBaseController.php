@@ -61,7 +61,6 @@ class ShapeBaseController extends WaxController {
     if($controller_list = constant("CONTROLLER_LIST")) $this->controller_list = unserialize($controller_list);
     
     if($route != $this->login_path) $this->permissions = $this->permissions();
-    
     $this->site_name = $_SERVER['HTTP_HOST'];
 	  /*
 	    although wax is flagging use_plugin as [DEPRECATION] it still uses it everywhere and doesnt use the plugins array
@@ -90,22 +89,8 @@ class ShapeBaseController extends WaxController {
    * - merge that with user based permissions, which would override the values - letting you black list actions
    */
   protected function permissions(){
-    //get the base permissions for everything
-    $this->base_permissions = $this->base_permissions();            
-    //cast to an array in case empty
-    $user_allowed = (array) $this->current_user->permissions();
-    $controller_allowed=array();
-    foreach($this->controller_list as $classname=>$controller){
-      $obj = new $classname(false);
-      //merge the base permissions for this class with the obj permissions
-      $perm = array_merge($obj->permissions, $this->base_permissions[$classname]);
-      $ex = $obj->excluded_from_permissions;
-      $controller_allowed[$classname] = array();
-      foreach($perm as $name=>$val){
-        if(!in_array($name, $ex)) $controller_allowed[$classname][$name] = $val; 
-      }    
-      $this->all_permissions[$classname] = array_merge((array) $this->base_permissions[$classname], $controller_allowed[$classname], (array) $user_allowed[$classname]);
-    }
+    $this->base_permissions = $this->base_permissions();
+    $this->all_permissions = $this->current_user->all_permissions($this->base_permissions, $this->controller_list);
     return $this->all_permissions[$this_class];
   }
   /**
