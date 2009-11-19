@@ -51,8 +51,7 @@ class ShapeBaseUsersController extends ShapeController {
       else $permission->allowed = 1;
 
       $this->model->permissions = $permission; 
-      //call the parent function to reset all_permission array
-      $this->permissions();
+      
     }
     $this->use_view = "_permissions";
   }
