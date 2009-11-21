@@ -18,7 +18,7 @@ function accordion(container, opts){
  */
 function accordion_alteration(obj){
   jQuery('#menu-shape-dashboard h3').removeClass('ui-state-active');
-  var trigger = "#"+jQuery(obj).parents('ul').attr('id').replace('-list', '-title');
+  var trigger = "#"+jQuery(obj).closest('ul.shape_listing').attr('id').replace('-list', '-title');
   jQuery('#'+menu_config.id).accordion('activate', trigger);
 };
 /**
