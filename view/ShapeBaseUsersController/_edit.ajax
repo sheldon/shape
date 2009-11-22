@@ -1,7 +1,7 @@
 
 <h3 class='widget-title ui-widget-header ui-helper-clearfix ui-corner-all ui-state-default'>Information</h3>
 <div class="widget-content">
-  <form action="/<?=$controller?>/_edit/<?=$model->primval?>" method="post" name="wax_form" class="widget-form edit-form inline-submit" replace="<?=str_replace("/", "-",$controller)?>-edit-<?=$model->primval?>">
+  <form action="/<?=$controller?>/_edit/<?=$model->primval?>" method="post" name="wax_form" class="widget-form edit-form inline-submit update-list" replace="<?=str_replace("/", "-",$controller)?>-edit-<?=$model->primval?>">
     <fieldset>
       <?if($model_posted && $model_saved):?>
     	<div class="ui-state-highlight ui-corner-all ui-widget form-message clearfix"> 
