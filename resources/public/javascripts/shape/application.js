@@ -193,6 +193,17 @@ function submit_form(obj){
     "url":destination,
     "data": form_data,
     "success":function(result){
+      if(jQuery(obj).hasClass("update-list")){
+        console.log(form_data);
+        jQuery.ajax({
+          "timeout": form_config.ajax_timeout,
+          "url":"/shape/pages/_menu_list.ajax?model_id=1",
+          "success":function(result){
+            jQuery("#main_menu .list-hover.ui-state-error").parent().replaceWith(result);
+            page_init();
+          }
+        });
+      }
       jQuery(obj).removeClass(form_config.error_class+" "+form_config.loading_class).addClass(form_config.success_class);
       jQuery(replace).html(result);
       page_init();      
