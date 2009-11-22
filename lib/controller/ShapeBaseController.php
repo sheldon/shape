@@ -219,7 +219,11 @@ class ShapeBaseController extends WaxController {
     $this->shape_models = $model->order($this->model_order)->all();
   }
   
-  
+  public function _menu_list($model = false){
+    if(!$model) $model = new $this->model_class;
+    if($model_id = Request::get("model_id"))
+      $this->shape_models = array(new $this->model_class($model_id));
+  }
   
   
   

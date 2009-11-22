@@ -1,5 +1,5 @@
 <?foreach($shape_models as $i=>$model):?>
-<li class='list_item item<?=$i?> type<?=fmod($i,2)?> clearfix'>
+<li class='list_item item<?=$i?> type<?=fmod($i,2)?> clearfix' rel="/<?=$controller?>/_menu_list.ajax?model_id=<?=$model->primval?>">
   <span class="list-hover">
     <span class='icons'>
       <a href="/<?=$controller?>/edit/<?=$model->primval?>" class="ui-icon ui-icon-wrench edit inline-load" title="Edit - <?=str_ireplace(PLUGIN_NAME, "", get_class($model))?> - <?=$model->$string_field?>">&nbsp;</a>

@@ -193,6 +193,19 @@ function submit_form(obj){
     "url":destination,
     "data": form_data,
     "success":function(result){
+      if(jQuery(obj).hasClass("update-list")){
+        var list_item = jQuery("#main_menu .list-hover.ui-state-error").parent();
+        jQuery.ajax({
+          "timeout": form_config.ajax_timeout,
+          "url":list_item.attr("rel"),
+          "success":function(result){
+            var new_html = $(result);
+            list_item.replaceWith(new_html);
+            new_html.children("span.list-hover").addClass(inline_load_config.success_class);
+            page_init();
+          }
+        });
+      }
       jQuery(obj).removeClass(form_config.error_class+" "+form_config.loading_class).addClass(form_config.success_class);
       jQuery(replace).html(result);
       page_init();      
@@ -252,8 +265,8 @@ function menu_hover_states(){
  * passing in a root_selector will limit the bound elements to children of that root
  * returns the jquery bound elements, so they can be chained or used afterwards (going to use this to implement automatic background loading when the browser is idle)
  */
-function sub_tree_ajax_setup(root_selector){
-  return root_selector.find("."+ajax_tree_config.class_name).click(function(){
+function sub_tree_ajax_setup(){
+  return jQuery(document).find("."+ajax_tree_config.class_name).unbind("click").click(function(){
     sub_tree_ajax_load(jQuery(this));
     return false;
   });
@@ -272,7 +285,6 @@ function sub_tree_ajax_load(clicked_tag){
       var list_item = clicked_tag.closest("li");
       if(result.length){
         list_item.append(result);
-        sub_tree_ajax_setup(list_item.children("ul"));
         page_init();
       }
       clicked_tag.click(function(){
@@ -385,6 +397,7 @@ function page_init(){
   ajax_forms();
   menu_hover_states();
   on_off_tags();
+  sub_tree_ajax_setup();
 }
 
 /** initialise everything **/
@@ -393,7 +406,6 @@ jQuery(document).ready(function(){
   main_menu();
   warnings();
   widgets();  
-  sub_tree_ajax_setup(jQuery(document));
   //nuts function that checks current address bar on page load to see if it can recall that page
   check_address_bar_for_page_load();   
   /* functions called from page init are effected by ajax calls; so this function is recalled in each ajax call */
