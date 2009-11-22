@@ -580,6 +580,10 @@ form.split fieldset.split4{width:12%;}
       #menu_container li li li li li li li li span.list-hover{padding-left:48px;}
       #menu_container li li li li li li li li li span.list-hover{padding-left:54px;}
       #menu_container li li li li li li li li li li span.list-hover{padding-left:60px;}
+      #menu_container li li li li li li li li li li li span.list-hover{padding-left:66px;}
+      #menu_container li li li li li li li li li li li li span.list-hover{padding-left:72px;}
+      #menu_container li li li li li li li li li li li li li span.list-hover{padding-left:78px;}
+      #menu_container li li li li li li li li li li li li li li span.list-hover{padding-left:84px;}
     
     #menu_container a.ui-icon{
       width:16px;
