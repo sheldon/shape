@@ -199,8 +199,9 @@ function submit_form(obj){
           "timeout": form_config.ajax_timeout,
           "url":list_item.attr("rel"),
           "success":function(result){
-            jQuery("#main_menu .list-hover.ui-state-error").parent().replaceWith(result);
+            var new_html = $(result);
             list_item.replaceWith(new_html);
+            new_html.children("span.list-hover").addClass(inline_load_config.success_class);
             page_init();
           }
         });
