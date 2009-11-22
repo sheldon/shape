@@ -194,12 +194,13 @@ function submit_form(obj){
     "data": form_data,
     "success":function(result){
       if(jQuery(obj).hasClass("update-list")){
-        console.log(form_data);
+        var list_item = jQuery("#main_menu .list-hover.ui-state-error").parent();
         jQuery.ajax({
           "timeout": form_config.ajax_timeout,
-          "url":"/shape/pages/_menu_list.ajax?model_id=1",
+          "url":list_item.attr("rel"),
           "success":function(result){
             jQuery("#main_menu .list-hover.ui-state-error").parent().replaceWith(result);
+            list_item.replaceWith(new_html);
             page_init();
           }
         });
