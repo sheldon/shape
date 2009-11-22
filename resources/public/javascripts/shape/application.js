@@ -353,6 +353,15 @@ function change_tag(obj){
     }
   });
 }
+
+function setup_draggables(){
+  jQuery("#menu-shape-pages ul").sortable({
+    connectWith: '#menu-shape-pages ul',
+    distance: 5,
+    containment: '#menu-shape-pages-list'
+  }).disableSelection();
+}
+
 /**
  * Common warning functions
  */
