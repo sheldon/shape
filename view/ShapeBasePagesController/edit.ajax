@@ -1,4 +1,15 @@
-<!-- 
-  ALL .ajax are the advanced edit which is loaded by & requires javascript; so it has lots of drag and drop stuff etc
+<h1 class="<?=str_replace("/", "-", $controller)?>-<?=$action?>-header shape-header">Editing '<?=$model->$string_field?>'</h1>
+
+<div class='small-widget-column clearfix'>
   
-  -->
+  
+</div>
+
+
+<div class='large-widget-column clearfix'>
+  
+  <div class='ui-widget <?=str_replace("/", "-",$controller)?> widget clearfix large-widget' id="<?=str_replace("/", "-",$controller)?>-edit-<?=$model->primval?>">
+    <?=partial("_edit", $this, $use_format)?>
+  </div>
+  
+</div>
