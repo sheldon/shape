@@ -19,6 +19,22 @@ class ShapeBasePagesController extends ShapeController {
     parent::_menu($model);
   }
   
+  public function _get_menu_with_depth($model = false){
+    if(!$model) $model = new $this->model_class;
+    
+    if($target_id = Request::get("target_id")){
+      $model = new $this->model_class($target_id);
+      $path_from_root = $model->path_from_root();
+      array_pop($path_from_root->rowset);
+      $children_array = array();
+      foreach($path_from_root as $node){
+        $children_model = new $this->model_class;
+        $children_array[] = $children_model->filter($model->parent_column."_".$model->primary_key,$node->primval)->all();
+      }
+      print_r($children_array); exit;
+    }
+  }
+  
   public function create($model = false){
     if($this->use_format == "ajax"){
       $this->new_model = $this->new_model();
